@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Calculator | DailyTools™</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* === Colors & Base Styles === */
+        :root {
+            --white: #ffffff;
+           /* --yellow: #ffd700;*/
+            --black: #000000;
+            --gray: #f5f5f5;
+            --dark-gray: #222222;
+            --border: #e0e0e0;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system;
+            margin: 0;
+            padding: 0;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+        }
+
+        /* === Header & Hamburger Menu === */
+        header {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+        
+        .hamburger {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--black);
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        /* === Sidebar Navigation === */
+           /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+
+        /* === Main Content === */
+        main {
+            padding: 1rem;
+            background: var(--white);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: var(--black);
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--yellow);
+            padding-bottom: 0.5rem;
+        }
+
+        /* === Calculator Styles === */
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 900px) {
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .calculator {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+        .calculator h2 {
+            margin-top: 0;
+            color: var(--black);
+            font-size: 1.3rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .calculator-type {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .calc-btn {
+            padding: 0.5rem 1rem;
+            background: var(--gray);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .calc-btn.active {
+            background: var(--black);
+            color: var(--white);
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .calculate-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1rem;
+        }
+        .calculate-btn:hover {
+            background: var(--dark-gray);
+        }
+        .results {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        .result-item .label {
+            font-weight: 500;
+        }
+        .result-item .value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .result-item.total .value {
+            color: var(--green);
+            font-size: 1.2rem;
+        }
+        
+        /* === Chart Styles === */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 2rem;
+        }
+        
+        /* === Responsive Adjustments === */
+        @media (min-width: 768px) {
+            header {
+                padding: 1rem 2rem;
+            }
+            main {
+                padding: 2rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+                margin: 1.5rem 0;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .sidebar {
+                width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Hamburger -->
+    <header>
+        <div class="logo">DailyTools™</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+           
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/anime.html" class="active">Anime Search</a></li>
+      <li><a href="/bank.html">Bank</a></li>
+      <li><a href="/calculator.html">Calculator</a></li>
+      <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+      <li><a href="/GitHub.html">GitHub</a></li>
+      <li><a href="/notes.html">Notes</a></li>
+      <li><a href="/password.html">Password Generator</a></li>
+      <li><a href="/photo.html">Gallery</a></li>
+      <li><a href="/qr.html">QR</a></li>
+      <li><a href="/quotes.html">Quote</a></li>
+      <li><a href="/salary.html">Salary</a></li>
+      <li><a href="/support.html">Support</a></li>
+      <li><a href="/temp-mail.html">Temp Mail</a></li>
+      <li><a href="/termux.html">Termux</a></li>
+      <li><a href="/timer.html">Timer</a></li>
+      <li><a href="/to do list.html">To Do List</a></li>
+      <li><a href="/youtube.html">YouTube</a></li>
+      
+  </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+      <div class="calculator-container">
+            <div class="calculator">
+                <h2>Loan EMI,FD,RD Calculator</h2>
+                <div class="calculator-type">
+                    <button class="calc-btn active" data-type="emi">EMI Calculator</button>
+                    <button class="calc-btn" data-type="fd">Fixed Deposit</button>
+                    <button class="calc-btn" data-type="rd">Recurring Deposit</button>
+                </div>
+                
+                <div class="input-group">
+                    <label for="loan-amount">Loan Amount (₹)</label>
+                    <input type="number" id="loan-amount" placeholder="E.g. 500000" value="1000000">
+                </div>
+                
+                <div class="input-group">
+                    <label for="interest-rate">Interest Rate (% per annum)</label>
+                    <input type="number" id="interest-rate" placeholder="E.g. 8.5" value="8.5" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="loan-tenure">Loan Tenure (Years)</label>
+                    <input type="number" id="loan-tenure" placeholder="E.g. 20" value="20">
+                </div>
+                
+                <button class="calculate-btn" id="calculate-emi">Calculate EMI</button>
+                
+                <div class="results">
+                    <div class="result-item">
+                        <span class="label">Monthly EMI</span>
+                        <span class="value" id="monthly-emi">₹0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Total Interest</span>
+                        <span class="value" id="total-interest">₹0</span>
+                    </div>
+                    <div class="result-item total">
+                        <span class="label">Total Payment</span>
+                        <span class="value" id="total-payment">₹0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculator">
+                <h2>Visualization</h2>
+                <div class="chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+                
+                <div class="results">
+                    <div class="result-item">
+                        <span class="label">Principal Amount</span>
+                        <span class="value" id="principal-amount">₹0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Interest Amount</span>
+                        <span class="value" id="interest-amount">₹0</span>
+                    </div>
+                    <div class="result-item total">
+                        <span class="label">Total Amount</span>
+                        <span class="value" id="total-amount">₹0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle Sidebar
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+
+        // Calculator functionality
+        const calcBtns = document.querySelectorAll('.calc-btn');
+        const calculateBtn = document.getElementById('calculate-emi');
+        let currentCalculator = 'emi';
+        
+        // Initialize chart
+        const ctx = document.getElementById('chart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Principal Amount', 'Interest Amount'],
+                datasets: [{
+                    data: [1000000, 0],
+                    backgroundColor: [
+                        '#2563eb',
+                        '#ef4444'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += '₹' + context.raw.toLocaleString();
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Switch calculator type
+        calcBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                calcBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCalculator = btn.dataset.type;
+                updateCalculatorUI();
+            });
+        });
+        
+        function updateCalculatorUI() {
+            const loanAmountGroup = document.querySelector('.input-group:nth-child(2)');
+            const interestRateGroup = document.querySelector('.input-group:nth-child(3)');
+            const tenureGroup = document.querySelector('.input-group:nth-child(4)');
+            const calculateBtn = document.getElementById('calculate-emi');
+            
+            if (currentCalculator === 'emi') {
+                loanAmountGroup.querySelector('label').textContent = 'Loan Amount (₹)';
+                interestRateGroup.querySelector('label').textContent = 'Interest Rate (% per annum)';
+                tenureGroup.querySelector('label').textContent = 'Loan Tenure (Years)';
+                calculateBtn.textContent = 'Calculate EMI';
+            } else if (currentCalculator === 'fd') {
+                loanAmountGroup.querySelector('label').textContent = 'Deposit Amount (₹)';
+                interestRateGroup.querySelector('label').textContent = 'Interest Rate (% per annum)';
+                tenureGroup.querySelector('label').textContent = 'Tenure (Years)';
+                calculateBtn.textContent = 'Calculate FD';
+            } else if (currentCalculator === 'rd') {
+                loanAmountGroup.querySelector('label').textContent = 'Monthly Deposit (₹)';
+                interestRateGroup.querySelector('label').textContent = 'Interest Rate (% per annum)';
+                tenureGroup.querySelector('label').textContent = 'Tenure (Years)';
+                calculateBtn.textContent = 'Calculate RD';
+            }
+            
+            // Clear results
+            document.getElementById('monthly-emi').textContent = '₹0';
+            document.getElementById('total-interest').textContent = '₹0';
+            document.getElementById('total-payment').textContent = '₹0';
+            document.getElementById('principal-amount').textContent = '₹0';
+            document.getElementById('interest-amount').textContent = '₹0';
+            document.getElementById('total-amount').textContent = '₹0';
+            
+            // Reset chart
+            chart.data.datasets[0].data = [0, 0];
+            chart.update();
+        }
+        
+        // Calculate EMI
+        calculateBtn.addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('loan-amount').value);
+            const rate = parseFloat(document.getElementById('interest-rate').value);
+            const tenure = parseFloat(document.getElementById('loan-tenure').value);
+            
+            if (isNaN(amount) || isNaN(rate) || isNaN(tenure) || amount <= 0 || rate <= 0 || tenure <= 0) {
+                alert('Please enter valid values for all fields.');
+                return;
+            }
+            
+            if (currentCalculator === 'emi') {
+                calculateEMI(amount, rate, tenure);
+            } else if (currentCalculator === 'fd') {
+                calculateFD(amount, rate, tenure);
+            } else if (currentCalculator === 'rd') {
+                calculateRD(amount, rate, tenure);
+            }
+        });
+        
+        function calculateEMI(principal, rate, years) {
+            const monthlyRate = rate / 12 / 100;
+            const months = years * 12;
+            const emi = principal * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
+            const totalPayment = emi * months;
+            const totalInterest = totalPayment - principal;
+            
+            document.getElementById('monthly-emi').textContent = '₹' + emi.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-interest').textContent = '₹' + totalInterest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-payment').textContent = '₹' + totalPayment.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            
+            document.getElementById('principal-amount').textContent = '₹' + principal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('interest-amount').textContent = '₹' + totalInterest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-amount').textContent = '₹' + totalPayment.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            
+            // Update chart
+            chart.data.datasets[0].data = [principal, totalInterest];
+            chart.update();
+        }
+        
+        function calculateFD(principal, rate, years) {
+            // Compound interest formula: A = P(1 + r/n)^(nt)
+            // For FD, typically interest is compounded quarterly, so n = 4
+            const n = 4; // compounded quarterly
+            const amount = principal * Math.pow(1 + (rate/100)/n, n * years);
+            const interest = amount - principal;
+            
+            document.getElementById('monthly-emi').textContent = 'N/A';
+            document.getElementById('total-interest').textContent = '₹' + interest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-payment').textContent = '₹' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            
+            document.getElementById('principal-amount').textContent = '₹' + principal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('interest-amount').textContent = '₹' + interest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-amount').textContent = '₹' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            
+            // Update chart
+            chart.data.datasets[0].data = [principal, interest];
+            chart.update();
+        }
+        
+        function calculateRD(monthlyDeposit, rate, years) {
+            // RD formula: A = P * (1 + r/n)^(nt) + P * (1 + r/n)^(nt-1) + ... for each deposit
+            // For RD, typically interest is compounded quarterly
+            const n = 4; // compounded quarterly
+            const months = years * 12;
+            let totalAmount = 0;
+            
+            for (let i = 1; i <= months; i++) {
+                // Each deposit compounds for a different period
+                const periods = (months - i + 1) / 3; // Convert to quarters
+                totalAmount += monthlyDeposit * Math.pow(1 + (rate/100)/n, periods);
+            }
+            
+            const totalDeposited = monthlyDeposit * months;
+            const interest = totalAmount - totalDeposited;
+            
+            document.getElementById('monthly-emi').textContent = '₹' + monthlyDeposit.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-interest').textContent = '₹' + interest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-payment').textContent = '₹' + totalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            
+            document.getElementById('principal-amount').textContent = '₹' + totalDeposited.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('interest-amount').textContent = '₹' + interest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            document.getElementById('total-amount').textContent = '₹' + totalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            
+            // Update chart
+            chart.data.datasets[0].data = [totalDeposited, interest];
+            chart.update();
+        }
+        
+        // Calculate with default values on page load
+        window.addEventListener('load', () => {
+            calculateEMI(1000000, 8.5, 20);
+        });
+    </script>
+</body>
+</html>

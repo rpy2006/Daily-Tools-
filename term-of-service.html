@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - DailyTools</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #c7d2fe;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --gray: #9ca3af;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            z-index: 101;
+        }
+
+        /* Terms Hero */
+        .terms-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), transparent);
+        }
+
+        .terms-hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .terms-hero-desc {
+            font-size: 1.25rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .last-updated {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .agreement-text {
+            margin-top: 24px;
+            padding: 16px;
+            background-color: var(--lighter);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Terms Content */
+        .terms-content {
+            padding: 80px 0;
+        }
+
+        .terms-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 60px;
+        }
+
+        .terms-main {
+            max-width: 800px;
+        }
+
+        .terms-section {
+            margin-bottom: 60px;
+        }
+
+        .terms-section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--darker);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .terms-text {
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .terms-list {
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .terms-list li {
+            margin-bottom: 12px;
+        }
+
+        .terms-highlight {
+            background-color: var(--lighter);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            margin: 32px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .terms-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+        }
+
+        .widget-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--darker);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .toc-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toc-link {
+            color: var(--dark);
+            transition: var(--transition);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .toc-link:hover {
+            color: var(--primary);
+        }
+
+        .toc-link:last-child {
+            border-bottom: none;
+        }
+
+        .help-card {
+            text-align: center;
+        }
+
+        .help-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            margin: 0 auto 16px;
+        }
+
+        .help-card p {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            background-color: var(--lighter);
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .contact-desc {
+            font-size: 1.125rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            color: var(--gray-light);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+
+        .footer-desc {
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+
+        .footer-links-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .terms-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .terms-sidebar {
+                position: static;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .terms-hero-title {
+                font-size: 2.25rem;
+            }
+            
+            .contact-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tools"></i>
+                DailyTools
+            </a>
+            
+            <nav class="nav-links">
+                     <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#tools" class="nav-link">Tools</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="careers.html" class="nav-link">Careers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="support.html" class="nav-link active">Support Us</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Terms Hero -->
+    <section class="terms-hero">
+        <div class="container">
+            <h1 class="terms-hero-title">Terms of Service</h1>
+            <p class="terms-hero-desc">Please read these Terms of Service carefully before using DailyTools. By accessing or using our services, you agree to be bound by these Terms.</p>
+            <span class="last-updated">Last Updated: January 15, 2023</span>
+            
+            <div class="agreement-text">
+                <p><strong>Important:</strong> These Terms of Service constitute a legally binding agreement between you and DailyTools. By accessing or using any part of our services, you agree to be bound by these Terms. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms Content -->
+    <section class="terms-content">
+        <div class="container terms-container">
+            <div class="terms-main">
+                <div class="terms-section">
+                    <h2 class="terms-section-title">1. Acceptance of Terms</h2>
+                    <p class="terms-text">By accessing or using DailyTools ("Service"), you agree to be bound by these Terms of Service ("Terms"), all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</p>
+                    <p class="terms-text">The materials contained in this website are protected by applicable copyright and trademark law. These Terms apply to all visitors, users, and others who access or use the Service.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">2. Description of Service</h2>
+                    <p class="terms-text">DailyTools provides a collection of productivity tools accessible via web browser and mobile applications. Our services include but are not limited to:</p>
+                    <ul class="terms-list">
+                        <li>Calculator tool for mathematical calculations</li>
+                        <li>Music player for audio playback</li>
+                        <li>Notes application for creating and managing notes</li>
+                        <li>Password generator for creating secure passwords</li>
+                        <li>Temporary email service for disposable email addresses</li>
+                        <li>Timer and stopwatch functionality</li>
+                        <li>Other productivity tools as may be added from time to time</li>
+                    </ul>
+                    <p class="terms-text">We reserve the right to modify, suspend, or discontinue any part of our services at any time without prior notice.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">3. User Accounts</h2>
+                    <p class="terms-text">While many of our tools can be used without creating an account, certain features may require account registration. When you create an account with us, you must provide information that is accurate, complete, and current at all times.</p>
+                    
+                    <div class="terms-highlight">
+                        <p><strong>Account Responsibility:</strong> You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password. You agree not to disclose your password to any third party.</p>
+                    </div>
+                    
+                    <p class="terms-text">You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account. We cannot and will not be liable for any loss or damage arising from your failure to comply with this security obligation.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">4. Acceptable Use</h2>
+                    <p class="terms-text">You agree not to use the Service for any unlawful purpose or in any way that violates these Terms. Examples of prohibited activities include:</p>
+                    <ul class="terms-list">
+                        <li>Violating any applicable laws or regulations</li>
+                        <li>Harassing, abusing, or harming another person</li>
+                        <li>Sending spam or other unauthorized advertising</li>
+                        <li>Attempting to interfere with or compromise system integrity</li>
+                        <li>Uploading or transmitting viruses or malicious code</li>
+                        <li>Collecting or tracking personal information of others</li>
+                        <li>Impersonating another user or person</li>
+                        <li>Interfering with or disrupting the Service</li>
+                    </ul>
+                    <p class="terms-text">We reserve the right to refuse service, terminate accounts, or remove content at our sole discretion if we believe you have violated these Terms.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">5. Intellectual Property Rights</h2>
+                    <p class="terms-text">The Service and its original content, features, and functionality are and will remain the exclusive property of DailyTools and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries.</p>
+                    <p class="terms-text">Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of DailyTools.</p>
+                    
+                    <div class="terms-highlight">
+                        <p><strong>User Content:</strong> For content that you create or own that you submit to the Service (such as notes or other user-generated content), you retain ownership rights. However, by submitting content to DailyTools, you grant us a worldwide, royalty-free, sublicensable license to use, reproduce, modify, and display that content solely for the purpose of providing the Service to you.</p>
+                    </div>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">6. Disclaimer of Warranties</h2>
+                    <p class="terms-text">Your use of the Service is at your sole risk. The Service is provided on an "AS IS" and "AS AVAILABLE" basis. DailyTools expressly disclaims all warranties of any kind, whether express or implied, including, but not limited to the implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+                    <p class="terms-text">DailyTools makes no warranty that:</p>
+                    <ul class="terms-list">
+                        <li>The Service will meet your specific requirements</li>
+                        <li>The Service will be uninterrupted, timely, secure, or error-free</li>
+                        <li>The results that may be obtained from the use of the Service will be accurate or reliable</li>
+                        <li>The quality of any products, services, information, or other material obtained by you through the Service will meet your expectations</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">7. Limitation of Liability</h2>
+                    <p class="terms-text">In no event shall DailyTools, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from:</p>
+                    <ul class="terms-list">
+                        <li>Your access to or use of or inability to access or use the Service</li>
+                        <li>Any conduct or content of any third party on the Service</li>
+                        <li>Any content obtained from the Service</li>
+                        <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+                    </ul>
+                    <p class="terms-text">This limitation of liability section applies whether the alleged liability is based on contract, tort, negligence, strict liability, or any other basis, even if DailyTools has been advised of the possibility of such damage.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">8. Indemnification</h2>
+                    <p class="terms-text">You agree to defend, indemnify and hold harmless DailyTools and its licensee and licensors, and their employees, contractors, agents, officers and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees), resulting from or arising out of:</p>
+                    <ul class="terms-list">
+                        <li>Your use and access of the Service</li>
+                        <li>Your violation of any term of these Terms</li>
+                        <li>Your violation of any third-party right, including without limitation any copyright, property, or privacy right</li>
+                        <li>Any claim that your content caused damage to a third party</li>
+                    </ul>
+                    <p class="terms-text">This defense and indemnification obligation will survive these Terms and your use of the Service.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">9. Changes to Terms</h2>
+                    <p class="terms-text">We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+                    <p class="terms-text">By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">10. Governing Law</h2>
+                    <p class="terms-text">These Terms shall be governed and construed in accordance with the laws of California, United States, without regard to its conflict of law provisions.</p>
+                    <p class="terms-text">Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2 class="terms-section-title">11. Contact Information</h2>
+                    <p class="terms-text">If you have any questions about these Terms, please contact us:</p>
+                    <ul class="terms-list">
+                        <li>By email: legal@dailytools.com</li>
+                        <li>Through our contact form: <a href="contact.html">Contact Us</a></li>
+                        <li>By mail: DailyTools, 123 Productivity Street, San Francisco, CA 94103, United States</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="terms-sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Terms Contents</h3>
+                    <div class="toc-links">
+                        <a href="#acceptance" class="toc-link">1. Acceptance of Terms</a>
+                        <a href="#description" class="toc-link">2. Description of Service</a>
+                        <a href="#accounts" class="toc-link">3. User Accounts</a>
+                        <a href="#use" class="toc-link">4. Acceptable Use</a>
+                        <a href="#ip" class="toc-link">5. Intellectual Property</a>
+                        <a href="#warranties" class="toc-link">6. Disclaimer of Warranties</a>
+                        <a href="#liability" class="toc-link">7. Limitation of Liability</a>
+                        <a href="#indemnification" class="toc-link">8. Indemnification</a>
+                        <a href="#changes" class="toc-link">9. Changes to Terms</a>
+                        <a href="#law" class="toc-link">10. Governing Law</a>
+                        <a href="#contact" class="toc-link">11. Contact Information</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="widget-title">Questions?</h3>
+                    <p>If you have questions about our Terms of Service, we're here to help.</p>
+                    <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Related Documents</h3>
+                    <div class="toc-links">
+                        <a href="privacy-policy.html" class="toc-link">Privacy Policy</a>
+                        <a href="#" class="toc-link">Cookie Policy</a>
+                        <a href="faq.html" class="toc-link">FAQ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="contact-title">Questions About Our Terms?</h2>
+            <p class="contact-desc">We're committed to transparency and happy to answer any questions you have about our Terms of Service.</p>
+            <a href="contact.html" class="btn btn-primary">Contact Our Legal Team</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-tools"></i>
+                        DailyTools
+                    </a>
+                    <p class="footer-desc">A free, privacy-focused, all-in-one platform offering a suite of online productivity tools.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Product</h3>
+                    <div class="footer-links">
+                        <a href="index.html#features" class="footer-link">Features</a>
+                        <a href="index.html#tools" class="footer-link">Tools</a>
+                        <a href="index.html#download" class="footer-link">Download</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Company</h3>
+                    <div class="footer-links">
+                        <a href="blog.html" class="footer-link">Blog</a>
+                        <a href="career.html" class="footer-link">Careers</a>
+                        <a href="contact.html" class="footer-link">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Legal</h3>
+                    <div class="footer-links">
+                        <a href="faq.html" class="footer-link">FAQ</a>
+                        <a href="support.html" class="footer-link">Support Us</a>
+                        <a href="term-of-service.html" class="footer-link">Terms of service </a>
+                        <a href="privacy-policy.html" class="footer-link"> Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> DailyTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu and smooth scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const header = document.querySelector('header');
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                    header.style.padding = '10px 0';
+                } else {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)';
+                    header.style.padding = '16px 0';
+                }
+            });
+            
+            // Smooth scrolling for table of contents
+            document.querySelectorAll('.toc-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // In a real implementation, this would scroll to the corresponding section
+                    alert('In a real implementation, this would scroll to the section: ' + this.textContent);
+                });
+            });
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

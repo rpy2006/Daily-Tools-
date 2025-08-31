@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Gallery Page - DailyTools</title>
+
+  <!-- Tailwind + Fonts + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
+
+  <style>
+    /* === Colors & Base Styles === */
+    :root {
+      --white: #ffffff;
+      --yellow: #ffd700;
+      --black: #000000;
+      --gray: #f5f5f5;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system;
+      margin: 0;
+      padding: 0;
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /*header content*/
+    header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+    }
+    
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--black);
+    }
+    
+    .hamburger {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: var(--black);
+      transition: 0.3s;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* === Sidebar Navigation === */
+      .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+
+
+    /* Main content */
+    main {
+      padding: 1rem;
+    }
+
+    /* PWA specific styles */
+    @media (display-mode: standalone) {
+      header {
+        padding-top: env(safe-area-inset-top);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Hamburger -->
+  <header>
+    <div class="logo">DailyTools™</div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+    <ul>
+       <li><a href="/index.html">Home</a></li>
+      <li><a href="/anime.html" class="active">Anime Search</a></li>
+      <li><a href="/bank.html">Bank</a></li>
+      <li><a href="/calculator.html">Calculator</a></li>
+      <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+      <li><a href="/GitHub.html">GitHub</a></li>
+      <li><a href="/notes.html">Notes</a></li>
+      <li><a href="/password.html">Password Generator</a></li>
+      <li><a href="/photo.html">Gallery</a></li>
+      <li><a href="/qr.html">QR</a></li>
+      <li><a href="/quotes.html">Quote</a></li>
+      <li><a href="/salary.html">Salary</a></li>
+      <li><a href="/support.html">Support</a></li>
+      <li><a href="/temp-mail.html">Temp Mail</a></li>
+      <li><a href="/termux.html">Termux</a></li>
+      <li><a href="/timer.html">Timer</a></li>
+      <li><a href="/to do list.html">To Do List</a></li>
+      <li><a href="/youtube.html">YouTube</a></li>
+    </ul>
+  </nav>
+
+  <!-- Gallery Content -->
+  <main>
+    
+    </div>
+
+    <!-- Gallery grid -->
+    <div class="grid grid-cols-3 gap-1 mt-2">
+      <!-- your images -->
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img alt="Closeup of a couple holding hands, man in brown shirt and woman in pink skirt" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" width="200"/>
+    <img alt="Woman in white tank top holding pink flowers with a man hugging her from behind" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" width="200"/>
+    <img alt="Couple kissing on a street at night with street lights" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" width="200"/>
+    <img alt="Man hugging woman with long black hair, back view, standing against a brick wall" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/61c57d7c-25b4-4941-b3ec-003f393739f8.jpg" width="200"/>
+    <img alt="Couple standing close outside, woman wearing a skirt and white top, man behind her" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/cf6f7d96-78a6-42d7-3f44-1263672631cc.jpg" width="200"/>
+    <img alt="Funny kdrama meme with three people, text 'Me', 'New k-drama', 'My unfinished K-drama'" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/84df8f3f-e80f-49eb-465c-c9596c49d127.jpg" width="200"/>
+    <img alt="Colorful clouds background with white text 'value your peace'" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/636cb3a5-8563-49c2-4312-0603e068901a.jpg" width="200"/>
+    <img alt="Woman taking mirror selfie holding a large bouquet of flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/9c32d4ef-7669-4f3a-f581-3f36f6c922e1.jpg" width="200"/>
+    <img alt="Woman holding large bouquet of white flowers, back view, standing near brick wall" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f7eff0a7-1f91-4a6b-d068-34a53324a5c8.jpg" width="200"/>
+    <img alt="Woman shopping for flowers at a flower market with many colorful flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/c48d139c-933b-4c9b-9c05-e81b74007eae.jpg" width="200"/>
+    <img alt="Woman buying flowers from a flower truck with many flowers displayed" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/93c8f4b7-a14c-4f9d-222b-16946727574d.jpg" width="200"/>
+    <img alt="Woman holding bouquet of flowers at the beach with ocean in background" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/b4cdaedd-3b38-40ef-6d3b-46c23271e6ac.jpg" width="200"/>
+    <img alt="Couple dancing in wedding attire, woman in white dress with bow, man in black suit" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f3e18f26-f226-466c-911b-b3271c2dd634.jpg" width="200"/>
+    <img alt="Woman holding birthday cake with lit candles in a dimly lit room" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/0f2f0327-abc0-48da-8c0a-52054175f987.jpg" width="200"/>
+    <img alt="Couple hugging at night with illuminated Eiffel Tower in the background" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/8d8bb85e-224b-4f1f-07d6-dd4224972bca.jpg" width="200"/>
+    <img alt="Woman with long black hair looking away in a green field with blue sky" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f02a7b8b-83c2-4b34-20f2-b8cdd0bf28f1.jpg" width="200"/>
+    <img alt="Closeup of a pink flower bouquet with various shades of pink flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/2f0dd0db-9ac2-4bf4-1e4b-2897682dd584.jpg" width="200"/>
+    <img alt="Cartoon illustration of a woman with dark hair and flowers around her" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/fa2f4c9b-c5bb-4358-9197-a3bd26a0faf4.jpg" width="200"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img alt="Closeup of a couple holding hands, man in brown shirt and woman in pink skirt" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" width="200"/>
+    <img alt="Woman in white tank top holding pink flowers with a man hugging her from behind" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" width="200"/>
+    <img alt="Couple kissing on a street at night with street lights" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" width="200"/>
+    <img alt="Man hugging woman with long black hair, back view, standing against a brick wall" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/61c57d7c-25b4-4941-b3ec-003f393739f8.jpg" width="200"/>
+    <img alt="Couple standing close outside, woman wearing a skirt and white top, man behind her" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/cf6f7d96-78a6-42d7-3f44-1263672631cc.jpg" width="200"/>
+    <img alt="Funny kdrama meme with three people, text 'Me', 'New k-drama', 'My unfinished K-drama'" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/84df8f3f-e80f-49eb-465c-c9596c49d127.jpg" width="200"/>
+    <img alt="Colorful clouds background with white text 'value your peace'" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/636cb3a5-8563-49c2-4312-0603e068901a.jpg" width="200"/>
+    <img alt="Woman taking mirror selfie holding a large bouquet of flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/9c32d4ef-7669-4f3a-f581-3f36f6c922e1.jpg" width="200"/>
+    <img alt="Woman holding large bouquet of white flowers, back view, standing near brick wall" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f7eff0a7-1f91-4a6b-d068-34a53324a5c8.jpg" width="200"/>
+    <img alt="Woman shopping for flowers at a flower market with many colorful flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/c48d139c-933b-4c9b-9c05-e81b74007eae.jpg" width="200"/>
+    <img alt="Woman buying flowers from a flower truck with many flowers displayed" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/93c8f4b7-a14c-4f9d-222b-16946727574d.jpg" width="200"/>
+    <img alt="Woman holding bouquet of flowers at the beach with ocean in background" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/b4cdaedd-3b38-40ef-6d3b-46c23271e6ac.jpg" width="200"/>
+    <img alt="Couple dancing in wedding attire, woman in white dress with bow, man in black suit" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f3e18f26-f226-466c-911b-b3271c2dd634.jpg" width="200"/>
+    <img alt="Woman holding birthday cake with lit candles in a dimly lit room" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/0f2f0327-abc0-48da-8c0a-52054175f987.jpg" width="200"/>
+    <img alt="Couple hugging at night with illuminated Eiffel Tower in the background" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/8d8bb85e-224b-4f1f-07d6-dd4224972bca.jpg" width="200"/>
+    <img alt="Woman with long black hair looking away in a green field with blue sky" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f02a7b8b-83c2-4b34-20f2-b8cdd0bf28f1.jpg" width="200"/>
+    <img alt="Closeup of a pink flower bouquet with various shades of pink flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/2f0dd0db-9ac2-4bf4-1e4b-2897682dd584.jpg" width="200"/>
+    <img alt="Cartoon illustration of a woman with dark hair and flowers around her" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/fa2f4c9b-c5bb-4358-9197-a3bd26a0faf4.jpg" width="200"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+        <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+      <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+   <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+   <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+   <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" alt="Gallery Image"/>
+    <img class="w-full object-cover aspect-square" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" alt="Gallery Image"/>
+    <img alt="Closeup of a couple holding hands, man in brown shirt and woman in pink skirt" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/1fbe4fba-1cfe-48ff-58fe-5f48b2f07129.jpg" width="200"/>
+    <img alt="Woman in white tank top holding pink flowers with a man hugging her from behind" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/46b6afb7-68a6-4ad1-2136-a4569ae43663.jpg" width="200"/>
+    <img alt="Couple kissing on a street at night with street lights" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/7f4830ea-b6f9-4cdd-20b7-be316ff4147d.jpg" width="200"/>
+    <img alt="Man hugging woman with long black hair, back view, standing against a brick wall" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/61c57d7c-25b4-4941-b3ec-003f393739f8.jpg" width="200"/>
+    <img alt="Couple standing close outside, woman wearing a skirt and white top, man behind her" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/cf6f7d96-78a6-42d7-3f44-1263672631cc.jpg" width="200"/>
+    <img alt="Funny kdrama meme with three people, text 'Me', 'New k-drama', 'My unfinished K-drama'" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/84df8f3f-e80f-49eb-465c-c9596c49d127.jpg" width="200"/>
+    <img alt="Colorful clouds background with white text 'value your peace'" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/636cb3a5-8563-49c2-4312-0603e068901a.jpg" width="200"/>
+    <img alt="Woman taking mirror selfie holding a large bouquet of flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/9c32d4ef-7669-4f3a-f581-3f36f6c922e1.jpg" width="200"/>
+    <img alt="Woman holding large bouquet of white flowers, back view, standing near brick wall" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f7eff0a7-1f91-4a6b-d068-34a53324a5c8.jpg" width="200"/>
+    <img alt="Woman shopping for flowers at a flower market with many colorful flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/c48d139c-933b-4c9b-9c05-e81b74007eae.jpg" width="200"/>
+    <img alt="Woman buying flowers from a flower truck with many flowers displayed" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/93c8f4b7-a14c-4f9d-222b-16946727574d.jpg" width="200"/>
+    <img alt="Woman holding bouquet of flowers at the beach with ocean in background" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/b4cdaedd-3b38-40ef-6d3b-46c23271e6ac.jpg" width="200"/>
+    <img alt="Couple dancing in wedding attire, woman in white dress with bow, man in black suit" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f3e18f26-f226-466c-911b-b3271c2dd634.jpg" width="200"/>
+    <img alt="Woman holding birthday cake with lit candles in a dimly lit room" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/0f2f0327-abc0-48da-8c0a-52054175f987.jpg" width="200"/>
+    <img alt="Couple hugging at night with illuminated Eiffel Tower in the background" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/8d8bb85e-224b-4f1f-07d6-dd4224972bca.jpg" width="200"/>
+    <img alt="Woman with long black hair looking away in a green field with blue sky" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/f02a7b8b-83c2-4b34-20f2-b8cdd0bf28f1.jpg" width="200"/>
+    <img alt="Closeup of a pink flower bouquet with various shades of pink flowers" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/2f0dd0db-9ac2-4bf4-1e4b-2897682dd584.jpg" width="200"/>
+    <img alt="Cartoon illustration of a woman with dark hair and flowers around her" class="w-full object-cover aspect-square" height="200" src="https://storage.googleapis.com/a1aa/image/fa2f4c9b-c5bb-4358-9197-a3bd26a0faf4.jpg" width="200"/
+    
+      <!-- ... keep the rest of your images -->
+    </div>
+  </main>
+  <script>
+    // Toggle Sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      sidebar.classList.toggle('active');
+    });
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful');
+          })
+          .catch(err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>

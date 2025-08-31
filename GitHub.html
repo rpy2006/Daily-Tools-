@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Search | DailyTools™</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --black: #000000;
+      --gray: #f5f5f5;
+      --dark-gray: #222222;
+      --border: #e0e0e0;
+      --muted: #94a3b8;
+      --danger: #ef4444;
+      --yellow: #ffd700;
+      --blue: #3b82f6;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1001;
+    }
+    
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--black);
+    }
+    
+    .hamburger {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: var(--black);
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    
+    /* Sidebar */
+      .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+
+    
+    /* Main */
+    main {
+      flex: 1;
+      padding: 2rem;
+      background: var(--white);
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    h1 {
+      text-align: center;
+      color: var(--black);
+      margin: 1rem 0 1.5rem;
+      font-size: 1.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--yellow);
+    }
+    
+    .search-container {
+      background: var(--gray);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    
+    .searchbar {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 140px 160px 120px;
+      margin-top: 12px;
+    }
+    
+    input, select, button {
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--black);
+      padding: 10px 12px;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      font-family: 'Inter', system-ui, -apple-system;
+    }
+    
+    input:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+    
+    input::placeholder {
+      color: var(--muted);
+    }
+    
+    button {
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    
+    .primary {
+      background: var(--black);
+      color: var(--white);
+    }
+    
+    .primary:hover {
+      background: #333;
+    }
+    
+    .ghost {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--black);
+    }
+    
+    .ghost:hover {
+      background: var(--gray);
+    }
+    
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    
+    .warn {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    
+    .status {
+      margin: 10px 0 6px;
+      min-height: 24px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 1.5rem 0;
+    }
+    
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    
+    .card h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    
+    .card h3 a {
+      color: var(--black);
+      text-decoration: none;
+    }
+    
+    .card h3 a:hover {
+      color: var(--blue);
+      text-decoration: underline;
+    }
+    
+    .card p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--gray);
+    }
+    
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      object-fit: cover;
+    }
+    
+    .row-flex {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .empty {
+      border: 1px dashed var(--border);
+      padding: 40px 24px;
+      border-radius: 12px;
+      text-align: center;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+    
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin: 24px 0;
+    }
+    
+    .pagination button {
+      padding: 8px 16px;
+      min-width: 80px;
+    }
+    
+    .pill {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    
+    .error {
+      color: var(--danger);
+      background: rgba(239, 68, 68, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid var(--danger);
+    }
+    
+    .loading {
+      opacity: .7;
+      pointer-events: none;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: auto;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      .searchbar {
+        grid-template-columns: 1fr;
+      }
+      
+      main {
+        padding: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      header {
+        padding: 1rem;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .logo {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">DailyTools™</div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/anime.html">Anime Search</a></li>
+      <li><a href="/bank.html">Bank</a></li>
+      <li><a href="/calculator.html">Calculator</a></li>
+      <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+      <li><a href="/GitHub.html" class="active">GitHub</a></li>
+      <li><a href="/notes.html">Notes</a></li>
+      <li><a href="/password.html">Password Generator</a></li>
+      <li><a href="/photo.html">Gallery</a></li>
+      <li><a href="/qr.html">QR</a></li>
+      <li><a href="/quotes.html">Quote</a></li>
+      <li><a href="/salary.html">Salary</a></li>
+      <li><a href="/support.html">Support</a></li>
+      <li><a href="/temp-mail.html">Temp Mail</a></li>
+      <li><a href="/termux.html">Termux</a></li>
+      <li><a href="/timer.html">Timer</a></li>
+      <li><a href="/to do list.html">To Do List</a></li>
+      <li><a href="/youtube.html">YouTube</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main -->
+  <main>
+    <h1>GitHub Search — Repos, Users, Issues</h1>
+
+    <div class="search-container">
+      <div class="searchbar">
+        <input id="q" type="search" placeholder="Search GitHub... e.g. nextjs stars:>1000, user:vercel, topic:termux" />
+        <select id="type">
+          <option value="repositories">Repositories</option>
+          <option value="users">Users</option>
+          <option value="issues">Issues</option>
+        </select>
+        <select id="sort">
+          <option value="">Best match</option>
+        </select>
+        <select id="order">
+          <option value="desc" selected>Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
+      </div>
+
+      <div class="controls">
+        <button id="btnSearch" class="primary">Search</button>
+        <button id="btnClear" class="ghost">Clear</button>
+      </div>
+      
+      <div class="warn">
+        Use GitHub search syntax for better results
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="results" class="grid"></div>
+    <div id="empty" class="empty" style="display:none">
+      <p>No results yet. Try a search above.</p>
+    </div>
+
+    <div class="pagination">
+      <button id="prev" class="ghost">Prev</button>
+      <span id="pageLabel" class="pill">Page 1</span>
+      <button id="next" class="ghost">Next</button>
+    </div>
+  </main>
+
+  
+
+  <script>
+    // Sidebar toggle
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      sidebar.classList.toggle('active');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('active') && 
+          !sidebar.contains(e.target) && 
+          !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        sidebar.classList.remove('active');
+      }
+    });
+
+    // Highlight active link
+    const currentPath = window.location.pathname.split("/").pop();
+    document.querySelectorAll(".sidebar a").forEach(link => {
+      const linkPath = link.getAttribute("href").split("/").pop();
+      if(linkPath === currentPath) {
+        link.classList.add("active");
+      }
+    });
+
+    // GitHub Search functionality
+    const q = document.getElementById('q');
+    const type = document.getElementById('type');
+    const sort = document.getElementById('sort');
+    const order = document.getElementById('order');
+    const btnSearch = document.getElementById('btnSearch');
+    const btnClear = document.getElementById('btnClear');
+    const statusEl = document.getElementById('status');
+    const resultsEl = document.getElementById('results');
+    const emptyEl = document.getElementById('empty');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const pageLabel = document.getElementById('pageLabel');
+
+    const state = {
+      q: '',
+      type: 'repositories',
+      sort: '',
+      order: 'desc',
+      page: 1,
+      per_page: 20,
+      total_count: 0
+    };
+
+    // Update sort options based on selected type
+    function updateSortOptions() {
+      // Clear existing options
+      sort.innerHTML = '';
+      
+      let options = [];
+      
+      switch(type.value) {
+        case 'repositories':
+          options = [
+            { value: '', text: 'Best match' },
+            { value: 'stars', text: 'Stars' },
+            { value: 'forks', text: 'Forks' },
+            { value: 'help-wanted-issues', text: 'Help wanted' },
+            { value: 'updated', text: 'Updated' }
+          ];
+          break;
+        case 'users':
+          options = [
+            { value: '', text: 'Best match' },
+            { value: 'followers', text: 'Followers' },
+            { value: 'repositories', text: 'Repositories' },
+            { value: 'joined', text: 'Joined' }
+          ];
+          break;
+        case 'issues':
+          options = [
+            { value: '', text: 'Best match' },
+            { value: 'comments', text: 'Comments' },
+            { value: 'created', text: 'Created' },
+            { value: 'updated', text: 'Updated' }
+          ];
+          break;
+      }
+      
+      // Add new options
+      options.forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt.value;
+        option.textContent = opt.text;
+        if (opt.value === state.sort) {
+          option.selected = true;
+        }
+        sort.appendChild(option);
+      });
+    }
+
+    // Update search placeholder based on type
+    function updatePlaceholder() {
+      switch(type.value) {
+        case 'repositories':
+          q.placeholder = 'Search repositories... e.g. nextjs stars:>1000';
+          break;
+        case 'users':
+          q.placeholder = 'Search users... e.g. user:vercel';
+          break;
+        case 'issues':
+          q.placeholder = 'Search issues... e.g. topic:termux';
+          break;
+      }
+    }
+
+    // Event listeners
+    type.addEventListener('change', () => {
+      state.type = type.value;
+      updateSortOptions();
+      updatePlaceholder();
+    });
+
+    sort.addEventListener('change', () => {
+      state.sort = sort.value;
+    });
+
+    order.addEventListener('change', () => {
+      state.order = order.value;
+    });
+
+    btnSearch.addEventListener('click', () => { 
+      state.page = 1; 
+      doSearch(); 
+    });
+    
+    btnClear.addEventListener('click', () => { 
+      q.value=''; 
+      resultsEl.innerHTML=''; 
+      emptyEl.style.display=''; 
+      statusEl.textContent=''; 
+      state.total_count=0; 
+      renderPagination(); 
+    });
+    
+    prevBtn.addEventListener('click', () => { 
+      if (state.page>1){ 
+        state.page--; 
+        doSearch(); 
+      }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      const maxPage = Math.min( Math.ceil(state.total_count / state.per_page), 50 );
+      if (state.page < maxPage) { 
+        state.page++; 
+        doSearch(); 
+      }
+    });
+
+    function renderPagination(){
+      const maxPage = Math.min( Math.ceil(state.total_count / state.per_page) || 1, 50);
+      pageLabel.textContent = `Page ${state.page}${state.total_count ? ` of ${maxPage}`:''}`;
+      prevBtn.disabled = state.page<=1;
+      nextBtn.disabled = state.page>=maxPage;
+    }
+
+    function apiUrl(){
+      const base = 'https://api.github.com/search';
+      const params = new URLSearchParams();
+      params.set('q', state.q || '');
+      if (state.sort) params.set('sort', state.sort);
+      if (state.order) params.set('order', state.order);
+      params.set('page', String(state.page));
+      params.set('per_page', String(state.per_page));
+      return `${base}/${state.type}?${params.toString()}`;
+    }
+
+    async function doSearch(){
+      const query = q.value.trim();
+      state.q = query;
+      if (!query){
+        emptyEl.style.display='';
+        resultsEl.innerHTML='';
+        statusEl.textContent='Enter a search above.';
+        state.total_count=0; 
+        renderPagination();
+        return;
+      }
+
+      statusEl.textContent='Loading...';
+      resultsEl.innerHTML='';
+      emptyEl.style.display='none';
+      document.body.classList.add('loading');
+
+      try{
+        const res = await fetch(apiUrl(), { headers: { 'Accept':'application/vnd.github+json' } });
+        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        const data = await res.json();
+
+        state.total_count = Number(data.total_count || 0);
+        render(data);
+        renderPagination();
+
+        statusEl.textContent = `${state.total_count.toLocaleString()} results`;
+        if (state.total_count === 0) {
+          emptyEl.style.display = '';
+          emptyEl.innerHTML = '<p>No results found for your search.</p>';
+        }
+      } catch(err){
+        resultsEl.innerHTML = '';
+        emptyEl.style.display = '';
+        statusEl.innerHTML = `<span class="error">${err.message}</span>`;
+      } finally {
+        document.body.classList.remove('loading');
+      }
+    }
+
+    function render(data){
+      resultsEl.innerHTML = '';
+      const items = Array.isArray(data.items) ? data.items : [];
+      if (!items.length){
+        emptyEl.style.display = '';
+        emptyEl.textContent = 'No results found.';
+        return;
+      }
+      emptyEl.style.display = 'none';
+
+      if (state.type === 'repositories'){
+        items.forEach(repo => resultsEl.appendChild(repoCard(repo)));
+      } else if (state.type === 'users'){
+        items.forEach(user => resultsEl.appendChild(userCard(user)));
+      } else if (state.type === 'issues'){
+        items.forEach(issue => resultsEl.appendChild(issueCard(issue)));
+      }
+    }
+
+    function repoCard(r){
+      const el = document.createElement('div'); 
+      el.className='card';
+      el.innerHTML = `
+        <h3><a href="${r.html_url}" target="_blank">${r.full_name}</a></h3>
+        <p>${r.description || 'No description'}</p>
+        <div class="meta">
+          <span class="tag">Stars: ${r.stargazers_count}</span>
+          <span class="tag">Forks: ${r.forks_count}</span>
+          <span class="tag">Issues: ${r.open_issues_count}</span>
+          ${r.language ? `<span class="tag">${r.language}</span>` : ''}
+        </div>
+      `;
+      return el;
+    }
+
+    function userCard(u){
+      const el = document.createElement('div'); 
+      el.className='card';
+      el.innerHTML = `
+        <div class="row-flex">
+          <img class="avatar" src="${u.avatar_url}" alt="${u.login}" />
+          <div>
+            <h3><a href="${u.html_url}" target="_blank">${u.login}</a></h3>
+            <p>Type: ${u.type} • Score: ${u.score}</p>
+          </div>
+        </div>
+      `;
+      return el;
+    }
+
+    function issueCard(i){
+      const el = document.createElement('div'); 
+      el.className='card';
+      el.innerHTML = `
+        <h3><a href="${i.html_url}" target="_blank">${i.title}</a></h3>
+        <p>Repo: ${i.repository_url.split('/').slice(-2).join('/')}</p>
+        <div class="meta">
+          <span class="tag">${i.state}</span>
+          <span class="tag">#${i.number}</span>
+          <span class="tag">Comments: ${i.comments}</span>
+        </div>
+      `;
+      return el;
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSortOptions();
+      updatePlaceholder();
+    });
+  </script>
+</body>
+</html>

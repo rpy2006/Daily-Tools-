@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI QR Generator | DailyTools</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <style>
+        :root {
+            --white: #ffffff;
+            --yellow: #ffd700;
+            --black: #000000;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
+            --light-gray: #ddd;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system;
+            margin: 0;
+            padding: 0;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        header {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+        .hamburger {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--black);
+            transition: 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+
+        main {
+            padding: 1.5rem 1rem 1rem;
+        }
+        .card {
+            background: var(--gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            color: var(--black);
+            border-bottom: 2px solid var(--yellow);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--black);
+        }
+        .hero p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #444;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn {
+            background: var(--black);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 1.75rem;
+        }
+        .btn:hover {
+            background: var(--dark-gray);
+        }
+        .btn-secondary {
+            background: #555;
+        }
+        .btn-secondary:hover {
+            background: #444;
+        }
+        .qr-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        .qr-container {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        #qr {
+            width: 200px;
+            height: 200px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qr-info {
+            flex: 2;
+            min-width: 300px;
+        }
+        .qr-info label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: black;
+        }
+        .qr-uri {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            word-break: break-all;
+            border: 1px solid var(--light-gray);
+            margin-bottom: 1rem;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 600px) {
+            .qr-section {
+                flex-direction: column;
+            }
+            .qr-info {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">DailyTools™</div>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+    <nav class="sidebar" id="sidebar">
+        <ul>
+         <li><a href="/index.html">Home</a></li>
+      <li><a href="/anime.html" class="active">Anime Search</a></li>
+      <li><a href="/bank.html">Bank</a></li>
+      <li><a href="/calculator.html">Calculator</a></li>
+      <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+      <li><a href="/GitHub.html">GitHub</a></li>
+      <li><a href="/notes.html">Notes</a></li>
+      <li><a href="/password.html">Password Generator</a></li>
+      <li><a href="/photo.html">Gallery</a></li>
+      <li><a href="/qr.html">QR</a></li>
+      <li><a href="/quotes.html">Quote</a></li>
+      <li><a href="/salary.html">Salary</a></li>
+      <li><a href="/support.html">Support</a></li>
+      <li><a href="/temp-mail.html">Temp Mail</a></li>
+      <li><a href="/termux.html">Termux</a></li>
+      <li><a href="/timer.html">Timer</a></li>
+      <li><a href="/to do list.html">To Do List</a></li>
+      <li><a href="/youtube.html">YouTube</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>UPI QR Code Generator</h1>
+                <p>Create customized UPI payment QR codes instantly for seamless transactions</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Generate Payment QR</h2>
+                    <p>For <strong>Rohit Prasad Yadav</strong> (UPI ID: <code>8389873317@fam</code>)</p>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="amount">Amount (₹)</label>
+                        <input id="amount" type="number" min="0" step="0.01" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="note">Payment Note (optional)</label>
+                        <input id="note" type="text" placeholder="e.g. Donation, Payment">
+                    </div>
+                    <div class="form-group">
+                        <button id="regen" class="btn">Generate QR</button>
+                    </div>
+                </div>
+                
+                <div class="qr-section">
+                    <div class="qr-container"><div id="qr"></div></div>
+                    <div class="qr-info">
+                        <label>Generated UPI Payment Link</label>
+                        <div class="qr-uri" id="upiText"></div>
+                        <div class="action-buttons">
+                            <button id="copyLink" class="btn btn-secondary">Copy Link</button>
+                            <button id="downloadQR" class="btn btn-secondary">Download QR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header"><h2>How It Works</h2></div>
+                <p>This UPI QR generator creates payment links using the official UPI deep-link scheme:</p>
+                <div class="qr-uri">upi://pay?pa=8389873317@fam&amp;pn=Rohit%20Prasad%20Yadav&amp;am={amount}&amp;tn={note}</div>
+                <p style="color: #666; font-size: 0.9rem;">All processing happens in your browser — no data is sent to any server.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const upiId = '8389873317@fam';
+            const payeeName = 'Rohit Prasad Yadav';
+            const amountInput = document.getElementById('amount');
+            const noteInput = document.getElementById('note');
+            const regenBtn = document.getElementById('regen');
+            const copyLinkBtn = document.getElementById('copyLink');
+            const downloadQRBtn = document.getElementById('downloadQR');
+            const upiTextElement = document.getElementById('upiText');
+            const qrElement = document.getElementById('qr');
+
+            function generateUPILink(amount, note) {
+                let link = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}`;
+                if (amount && amount > 0) link += `&am=${amount.toFixed(2)}`;
+                if (note) link += `&tn=${encodeURIComponent(note)}`;
+                return link;
+            }
+
+            let qrCode = new QRCode(qrElement, {
+                text: "",
+                width: 200,
+                height: 200,
+                colorDark: "grey",
+                colorLight: "black",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            function updateQR() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const note = noteInput.value;
+                const upiLink = generateUPILink(amount, note);
+                upiTextElement.textContent = upiLink;
+                qrCode.clear();
+                qrCode.makeCode(upiLink);
+            }
+
+            regenBtn.addEventListener('click', updateQR);
+            amountInput.addEventListener('input', updateQR);
+            noteInput.addEventListener('input', updateQR);
+
+            copyLinkBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(upiTextElement.textContent).then(() => {
+                    copyLinkBtn.textContent = 'Copied!';
+                    setTimeout(() => copyLinkBtn.textContent = 'Copy Link', 2000);
+                });
+            });
+
+            downloadQRBtn.addEventListener('click', () => {
+                const canvas = qrElement.querySelector('canvas');
+                const link = document.createElement('a');
+                link.download = 'UPI-Payment-QR.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+
+            updateQR(); // initial QR
+        });
+    </script>
+</body>
+</html>

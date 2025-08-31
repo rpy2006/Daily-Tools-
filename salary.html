@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Tracker | DailyTools™</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        /* === Colors & Base Styles === */
+        :root {
+            --white: #ffffff;
+            --yellow: #ffd700;
+            --black: #000000;
+            --gray: #f5f5f5;
+            --dark-gray: #222222;
+            --border: #e0e0e0;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system;
+            margin: 0;
+            padding: 0;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+        }
+
+        /* === Header & Hamburger Menu === */
+        header {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: var(--black);
+        }
+        .hamburger {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--black);
+            transition: 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* === Sidebar Navigation === */
+          .sidebar   {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 1.2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+        /* === Main Content === */
+        main {
+            padding: 1rem;
+            background: var(--white);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: var(--black);
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--yellow);
+            padding-bottom: 0.5rem;
+        }
+        .table-section h2 {
+            color: var(--black);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.25rem;
+            border-bottom: 1px solid var(--yellow);
+            padding-bottom: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* === Table Styles === */
+        .table-container {
+            margin-bottom: 0;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 0;
+            min-width: 300px;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--gray);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: var(--yellow);
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: 'Inter', system-ui, -apple-system;
+            box-sizing: border-box;
+        }
+        input[type="date"] {
+            min-width: 120px;
+        }
+        input[type="number"] {
+            min-width: 80px;
+        }
+        .amount-cell {
+            font-weight: 500;
+        }
+
+        /* === Button Styles === */
+        .table-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .add-table-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        button {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        button:hover {
+            background: var(--dark-gray);
+        }
+        button img {
+            width: 16px;
+            height: 16px;
+        }
+        .clear-btn {
+            background-color: #f44336;
+        }
+        .add-table-btn {
+            background-color: #4CAF50;
+        }
+        .remove-table-btn {
+            background-color: #f44336;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        /* === Responsive Adjustments === */
+        @media (min-width: 768px) {
+            header {
+                padding: 1rem 2rem;
+            }
+            main {
+                padding: 2rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+                margin: 1.5rem 0;
+            }
+            .table-section h2 {
+                font-size: 1.5rem;
+            }
+            th, td {
+                padding: 1rem;
+            }
+            button {
+                padding: 0.8rem 1.25rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .sidebar {
+                width: 220px;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+            th, td {
+                padding: 0.5rem;
+            }
+            .table-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .table-buttons button {
+                width: 100%;
+            }
+        }
+
+        /* PWA specific styles */
+        @media (display-mode: standalone) {
+            header {
+                padding-top: env(safe-area-inset-top);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Hamburger -->
+    <header>
+        <div class="logo">DailyTools™</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+             <li><a href="/index.html">Home</a></li>
+      <li><a href="/anime.html" class="active">Anime Search</a></li>
+      <li><a href="/bank.html">Bank</a></li>
+      <li><a href="/calculator.html">Calculator</a></li>
+      <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+      <li><a href="/GitHub.html">GitHub</a></li>
+      <li><a href="/notes.html">Notes</a></li>
+      <li><a href="/password.html">Password Generator</a></li>
+      <li><a href="/photo.html">Gallery</a></li>
+      <li><a href="/qr.html">QR</a></li>
+      <li><a href="/quotes.html">Quote</a></li>
+      <li><a href="/salary.html">Salary</a></li>
+      <li><a href="/support.html">Support</a></li>
+      <li><a href="/temp-mail.html">Temp Mail</a></li>
+      <li><a href="/termux.html">Termux</a></li>
+      <li><a href="/timer.html">Timer</a></li>
+      <li><a href="/to do list.html">To Do List</a></li>
+      <li><a href="/youtube.html">YouTube</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Delivery Tracker (×13)</h1>
+        
+        <div id="tables-container">
+            <!-- Tables will be added here dynamically -->
+        </div>
+
+        <div class="add-table-container">
+            <button onclick="addNewTable()" class="add-table-btn">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDEzaC02djZoLTJ2LTZINXYtMmg2VjVoMnY2aDZ2MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="add">
+                Add New Table
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Toggle Sidebar
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+
+        // Table counter
+        let tableCount = 0;
+
+        // Initialize first table on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if we have saved tables
+            const savedData = localStorage.getItem('deliveryTrackerData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                tableCount = data.tableCount || 0;
+                
+                if (tableCount > 0) {
+                    // We have saved tables, load them
+                    loadFromLocalStorage();
+                } else {
+                    // No saved tables, create first one
+                    addNewTable();
+                }
+            } else {
+                // First time user, create first table
+                addNewTable();
+            }
+        });
+
+        // Create a new table
+        function addNewTable() {
+            tableCount++;
+            const tableId = `table-${tableCount}`;
+            const rowCount = 10; // All tables now have 10 rows
+            
+            const tableSection = document.createElement('div');
+            tableSection.className = 'table-section';
+            tableSection.id = `section-${tableId}`;
+            tableSection.innerHTML = `
+                <h2>Delivery Tracker ${tableCount}</h2>
+                
+                <div class="table-container">
+                    <table id="${tableId}">
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>DELIVERED</th>
+                                <th>AMOUNT (×13)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="${tableId}-body">
+                            <!-- Rows will be generated here -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td>TOTAL</td>
+                                <td id="${tableId}-total-delivered">0</td>
+                                <td id="${tableId}-total-amount">₹0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <div class="table-buttons">
+                    <button onclick="downloadTable('${tableId}')">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDloLTRWM0g5djZINWw3IDcgNy03em0tNSAydjJoM3YyaC0zdjNoLTJ2LTNINXYtMmgzVjloM3YyeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="download">
+                        Download
+                    </button>
+                    <button onclick="clearTable('${tableId}')" class="clear-btn">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="clear">
+                        Clear
+                    </button>
+                    <button onclick="removeTable('${tableId}')" class="remove-table-btn">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="remove">
+                        Remove Table
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('tables-container').appendChild(tableSection);
+            initializeTable(tableId, rowCount);
+            saveToLocalStorage();
+        }
+
+        // Initialize table with rows
+        function initializeTable(tableId, rowCount) {
+            const tbody = document.getElementById(`${tableId}-body`);
+            tbody.innerHTML = '';
+            
+            for (let i = 0; i < rowCount; i++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="date" class="date-input"></td>
+                    <td><input type="number" class="delivered-input" placeholder="0"></td>
+                    <td class="amount-cell">₹0.00</td>
+                `;
+                
+                // Set default date to today
+                row.querySelector('.date-input').valueAsDate = new Date();
+                
+                // Add event listener to calculate amount when delivered changes
+                row.querySelector('.delivered-input').addEventListener('input', function() {
+                    calculateRowAmount(this, tableId);
+                    updateTotals(tableId);
+                    saveToLocalStorage();
+                });
+                
+                tbody.appendChild(row);
+            }
+        }
+
+        // Remove a table
+        function removeTable(tableId) {
+            if (confirm("Are you sure you want to remove this table? All data will be lost.")) {
+                const section = document.getElementById(`section-${tableId}`);
+                section.remove();
+                tableCount--;
+                saveToLocalStorage();
+                
+                // Update table numbers if needed
+                updateTableTitles();
+            }
+        }
+
+        // Update table titles after removal
+        function updateTableTitles() {
+            const sections = document.querySelectorAll('.table-section');
+            sections.forEach((section, index) => {
+                const title = section.querySelector('h2');
+                if (title) {
+                    title.textContent = `Delivery Tracker ${index + 1}`;
+                }
+            });
+        }
+
+        // Calculate amount for a single row (delivered × 13)
+        function calculateRowAmount(inputElement, tableId) {
+            const row = inputElement.closest('tr');
+            const delivered = parseFloat(inputElement.value) || 0;
+            const amountCell = row.querySelector('.amount-cell');
+            const amount = delivered * 13;
+            
+            amountCell.textContent = formatCurrency(amount);
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return '₹' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // Update totals
+        function updateTotals(tableId) {
+            let totalDelivered = 0;
+            let totalAmount = 0;
+            
+            document.querySelectorAll(`#${tableId}-body tr`).forEach(row => {
+                const delivered = parseFloat(row.querySelector('.delivered-input').value) || 0;
+                const amount = delivered * 13;
+                
+                totalDelivered += delivered;
+                totalAmount += amount;
+            });
+            
+            document.getElementById(`${tableId}-total-delivered`).textContent = totalDelivered;
+            document.getElementById(`${tableId}-total-amount`).textContent = formatCurrency(totalAmount);
+        }
+
+        // Clear table (reset all rows)
+        function clearTable(tableId) {
+            if (confirm("Are you sure you want to clear all data in this table?")) {
+                document.querySelectorAll(`#${tableId}-body tr`).forEach(row => {
+                    row.querySelector('.date-input').valueAsDate = new Date();
+                    row.querySelector('.delivered-input').value = '';
+                    row.querySelector('.amount-cell').textContent = '₹0.00';
+                });
+                updateTotals(tableId);
+                saveToLocalStorage();
+            }
+        }
+
+        // Download table as image
+        function downloadTable(tableId) {
+            const table = document.getElementById(tableId);
+            
+            html2canvas(table).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `delivery-tracker-${tableId}-${new Date().toISOString().slice(0,10)}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        // Save to localStorage
+        function saveToLocalStorage() {
+            const tablesData = {};
+            const tableSections = document.querySelectorAll('.table-section');
+            
+            tableSections.forEach(section => {
+                const tableId = section.querySelector('table').id;
+                const tableBody = document.getElementById(`${tableId}-body`);
+                tablesData[tableId] = [];
+                
+                tableBody.querySelectorAll('tr').forEach(row => {
+                    tablesData[tableId].push({
+                        date: row.querySelector('.date-input').value,
+                        delivered: row.querySelector('.delivered-input').value,
+                        amount: row.querySelector('.amount-cell').textContent
+                    });
+                });
+            });
+            
+            localStorage.setItem('deliveryTrackerData', JSON.stringify({
+                tablesData: tablesData,
+                tableCount: tableCount
+            }));
+        }
+
+        // Load from localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('deliveryTrackerData');
+            if (!savedData) return;
+            
+            const data = JSON.parse(savedData);
+            tableCount = data.tableCount || 0;
+            
+            if (tableCount === 0) return;
+            
+            // Clear any existing tables
+            document.getElementById('tables-container').innerHTML = '';
+            
+            // Recreate all saved tables
+            for (let i = 1; i <= tableCount; i++) {
+                const tableId = `table-${i}`;
+                const rowCount = 10;
+                
+                // Create table section
+                const tableSection = document.createElement('div');
+                tableSection.className = 'table-section';
+                tableSection.id = `section-${tableId}`;
+                tableSection.innerHTML = `
+                    <h2>Delivery Tracker ${i}</h2>
+                    
+                    <div class="table-container">
+                        <table id="${tableId}">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>DELIVERED</th>
+                                    <th>AMOUNT (×13)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="${tableId}-body">
+                                <!-- Rows will be generated here -->
+                            </tbody>
+                            <tfoot>
+                                <tr class="total-row">
+                                    <td>TOTAL</td>
+                                    <td id="${tableId}-total-delivered">0</td>
+                                    <td id="${tableId}-total-amount">₹0.00</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="table-buttons">
+                        <button onclick="downloadTable('${tableId}')">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDloLTRWM0g5djZINWw3IDcgNy03em0tNSAydjJoM3YyaC0zdjNoLTJ2LTNINXYtMmgzVjloM3YyeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="download">
+                            Download
+                        </button>
+                        <button onclick="clearTable('${tableId}')" class="clear-btn">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="clear">
+                            Clear
+                        </button>
+                        <button onclick="removeTable('${tableId}')" class="remove-table-btn">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" alt="remove">
+                            Remove Table
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('tables-container').appendChild(tableSection);
+                initializeTable(tableId, rowCount);
+                
+                // Load data if available
+                if (data.tablesData && data.tablesData[tableId]) {
+                    const tableData = data.tablesData[tableId];
+                    const tbody = document.getElementById(`${tableId}-body`);
+                    
+                    tbody.querySelectorAll('tr').forEach((row, index) => {
+                        if (tableData[index]) {
+                            row.querySelector('.date-input').value = tableData[index].date;
+                            row.querySelector('.delivered-input').value = tableData[index].delivered;
+                            
+                            // Recalculate amount in case the multiplier changes later
+                            if (tableData[index].delivered) {
+                                const delivered = parseFloat(tableData[index].delivered) || 0;
+                                row.querySelector('.amount-cell').textContent = formatCurrency(delivered * 13);
+                            }
+                        }
+                    });
+                    
+                    updateTotals(tableId);
+                }
+            }
+        }
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - DailyTools</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #c7d2fe;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --gray: #9ca3af;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            z-index: 101;
+        }
+
+        /* Blog Hero */
+        .blog-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), transparent);
+            text-align: center;
+        }
+
+        .blog-hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .blog-hero-desc {
+            font-size: 1.25rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .blog-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            background-color: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 20px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* Blog Content */
+        .blog-content {
+            padding: 80px 0;
+        }
+
+        .blog-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .article-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            height: 200px;
+            background: linear-gradient(45deg, #4f46e5, #7c73d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+        }
+
+        .article-content {
+            padding: 24px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .article-category {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .article-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--darker);
+        }
+
+        .article-excerpt {
+            color: var(--dark);
+            margin-bottom: 24px;
+        }
+
+        .article-link {
+            color: var(--primary);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .article-link:hover {
+            gap: 12px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+        }
+
+        .widget-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--darker);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .popular-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .popular-post {
+            display: flex;
+            gap: 12px;
+        }
+
+        .popular-post-img {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #4f46e5, #7c73d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .popular-post-content h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--darker);
+        }
+
+        .popular-post-content .post-date {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 6px 12px;
+            background-color: var(--lighter);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .newsletter-input {
+            padding: 12px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-newsletter {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-newsletter:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 60px;
+            gap: 8px;
+        }
+
+        .page-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .page-link:hover, .page-link.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            color: var(--gray-light);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+
+        .footer-desc {
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+
+        .footer-links-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .blog-hero-title {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tools"></i>
+                DailyTools
+            </a>
+            
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#tools" class="nav-link">Tools</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="careers.html" class="nav-link">Careers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="support.html" class="nav-link active">Support Us</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1 class="blog-hero-title">DailyTools Blog</h1>
+            <p class="blog-hero-desc">Insights, updates, and thought leadership on productivity tools, AI technology, and the future of digital efficiency.</p>
+            
+            <div class="blog-categories">
+                <a href="#" class="category-btn active">All Articles</a>
+                <a href="#" class="category-btn">AI & Machine Learning</a>
+                <a href="#" class="category-btn">Productivity</a>
+                <a href="#" class="category-btn">Technology</a>
+                <a href="#" class="category-btn">LLM Models</a>
+                <a href="#" class="category-btn">Product Updates</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-content">
+        <div class="container blog-container">
+            <div class="articles-main">
+                <div class="articles-grid">
+                    <!-- Article 1 -->
+                    <article class="article-card">
+                        <div class="article-image">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-category">AI Technology</span>
+                                <span>June 15, 2023</span>
+                            </div>
+                            <h2 class="article-title">How AI is Revolutionizing Productivity Tools</h2>
+                            <p class="article-excerpt">Discover how artificial intelligence is transforming the way we work and the tools we use to maximize efficiency in our daily tasks.</p>
+                            <a href="#" class="article-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 2 -->
+                    <article class="article-card">
+                        <div class="article-image">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-category">LLM Models</span>
+                                <span>May 28, 2023</span>
+                            </div>
+                            <h2 class="article-title">Understanding Large Language Models: A Beginner's Guide</h2>
+                            <p class="article-excerpt">Learn what LLMs are, how they work, and why they're becoming an essential component of modern software applications.</p>
+                            <a href="#" class="article-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 3 -->
+                    <article class="article-card">
+                        <div class="article-image">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-category">Privacy</span>
+                                <span>May 10, 2023</span>
+                            </div>
+                            <h2 class="article-title">Privacy-First Approach: Why It Matters in Today's Digital World</h2>
+                            <p class="article-excerpt">Exploring the importance of privacy-focused tools and how DailyTools ensures your data remains secure and private.</p>
+                            <a href="#" class="article-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 4 -->
+                    <article class="article-card">
+                        <div class="article-image">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-category">Product Updates</span>
+                                <span>April 22, 2023</span>
+                            </div>
+                            <h2 class="article-title">Announcing DailyTools 2.0: What's New</h2>
+                            <p class="article-excerpt">A comprehensive overview of the latest features and improvements in our biggest update yet.</p>
+                            <a href="#" class="article-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 5 -->
+                    <article class="article-card">
+                        <div class="article-image">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-category">Productivity</span>
+                                <span>April 5, 2023</span>
+                            </div>
+                            <h2 class="article-title">10 Productivity Hacks Using Everyday Tools</h2>
+                            <p class="article-excerpt">Simple yet effective ways to boost your productivity using tools you already have access to.</p>
+                            <a href="#" class="article-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 6 -->
+                    <article class="article-card">
+                        <div class="article-image">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="article-content">
+                            <div class="article-meta">
+                                <span class="article-category">Technology</span>
+                                <span>March 18, 2023</span>
+                            </div>
+                            <h2 class="article-title">The Future of Work: Trends to Watch in 2023</h2>
+                            <p class="article-excerpt">From AI integration to remote collaboration, explore the technologies shaping how we'll work in the coming years.</p>
+                            <a href="#" class="article-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- About Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">About DailyTools</h3>
+                    <p>DailyTools is a free, privacy-focused platform offering a suite of online productivity tools designed to help you work smarter.</p>
+                </div>
+
+                <!-- Popular Posts -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Popular Articles</h3>
+                    <div class="popular-posts">
+                        <div class="popular-post">
+                            <div class="popular-post-img">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="popular-post-content">
+                                <h4>How AI is Revolutionizing Productivity Tools</h4>
+                                <span class="post-date">June 15, 2023</span>
+                            </div>
+                        </div>
+                        <div class="popular-post">
+                            <div class="popular-post-img">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="popular-post-content">
+                                <h4>Understanding Large Language Models</h4>
+                                <span class="post-date">May 28, 2023</span>
+                            </div>
+                        </div>
+                        <div class="popular-post">
+                            <div class="popular-post-img">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="popular-post-content">
+                                <h4>Privacy-First Approach: Why It Matters</h4>
+                                <span class="post-date">May 10, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">AI & Machine Learning (8)</a>
+                        <a href="#" class="footer-link">Productivity (12)</a>
+                        <a href="#" class="footer-link">Technology (15)</a>
+                        <a href="#" class="footer-link">LLM Models (5)</a>
+                        <a href="#" class="footer-link">Product Updates (7)</a>
+                        <a href="#" class="footer-link">Privacy & Security (6)</a>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Tags</h3>
+                    <div class="tags-cloud">
+                        <a href="#" class="tag">AI</a>
+                        <a href="#" class="tag">Productivity</a>
+                        <a href="#" class="tag">LLM</a>
+                        <a href="#" class="tag">Technology</a>
+                        <a href="#" class="tag">Tools</a>
+                        <a href="#" class="tag">GPT</a>
+                        <a href="#" class="tag">Machine Learning</a>
+                        <a href="#" class="tag">Software</a>
+                        <a href="#" class="tag">Updates</a>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Subscribe to Newsletter</h3>
+                    <p>Get the latest articles and product updates delivered straight to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                        <button type="submit" class="btn-newsletter">Subscribe</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-tools"></i>
+                        DailyTools
+                    </a>
+                    <p class="footer-desc">A free, privacy-focused, all-in-one platform offering a suite of online productivity tools.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Product</h3>
+                    <div class="footer-links">
+                        <a href="index.html#features" class="footer-link">Features</a>
+                        <a href="index.html#tools" class="footer-link">Tools</a>
+                        <a href="index.html#download" class="footer-link">Download</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Company</h3>
+                    <div class="footer-links">
+                        <a href="blog.html" class="footer-link">Blog</a>
+                        <a href="career.html" class="footer-link">Careers</a>
+                        <a href="contact.html" class="footer-link">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Support</h3>
+                    <div class="footer-links">
+                        <a href="faq.html" class="footer-link">FAQ</a>
+                        <a href="support.html" class="footer-link">Support Us</a>
+                        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+                        <a href="term-of-service.html" class="footer-link">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> DailyTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const header = document.querySelector('header');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                    header.style.padding = '10px 0';
+                } else {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)';
+                    header.style.padding = '16px 0';
+                }
+            });
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

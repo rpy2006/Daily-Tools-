@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - DailyTools</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #c7d2fe;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --gray: #9ca3af;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            z-index: 101;
+        }
+
+        /* Policy Hero */
+        .policy-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), transparent);
+        }
+
+        .policy-hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .policy-hero-desc {
+            font-size: 1.25rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .last-updated {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Policy Content */
+        .policy-content {
+            padding: 80px 0;
+        }
+
+        .policy-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 60px;
+        }
+
+        .policy-main {
+            max-width: 800px;
+        }
+
+        .policy-section {
+            margin-bottom: 60px;
+        }
+
+        .policy-section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--darker);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .policy-text {
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .policy-list {
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .policy-list li {
+            margin-bottom: 12px;
+        }
+
+        .policy-highlight {
+            background-color: var(--lighter);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            margin: 32px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .policy-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+        }
+
+        .widget-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--darker);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .toc-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toc-link {
+            color: var(--dark);
+            transition: var(--transition);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .toc-link:hover {
+            color: var(--primary);
+        }
+
+        .toc-link:last-child {
+            border-bottom: none;
+        }
+
+        .help-card {
+            text-align: center;
+        }
+
+        .help-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            margin: 0 auto 16px;
+        }
+
+        .help-card p {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            background-color: var(--lighter);
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .contact-desc {
+            font-size: 1.125rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            color: var(--gray-light);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+
+        .footer-desc {
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+
+        .footer-links-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .policy-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .policy-sidebar {
+                position: static;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .policy-hero-title {
+                font-size: 2.25rem;
+            }
+            
+            .contact-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tools"></i>
+                DailyTools
+            </a>
+            
+            <nav class="nav-links">
+                     <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#tools" class="nav-link">Tools</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="careers.html" class="nav-link">Careers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="support.html" class="nav-link active">Support Us</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Policy Hero -->
+    <section class="policy-hero">
+        <div class="container">
+            <h1 class="policy-hero-title">Privacy Policy</h1>
+            <p class="policy-hero-desc">At DailyTools, we take your privacy seriously. This policy explains how we collect, use, and protect your information when you use our services.</p>
+            <span class="last-updated">Last Updated: September 15, 2025</span>
+        </div>
+    </section>
+
+    <!-- Policy Content -->
+    <section class="policy-content">
+        <div class="container policy-container">
+            <div class="policy-main">
+                <div class="policy-section">
+                    <h2 class="policy-section-title">1. Introduction</h2>
+                    <p class="policy-text">Welcome to DailyTools. We are committed to protecting your privacy and ensuring you have a positive experience when using our tools and services. This Privacy Policy outlines how we handle your information when you use our website and applications.</p>
+                    <p class="policy-text">By accessing or using DailyTools, you agree to the collection and use of information in accordance with this policy. Our services are designed with privacy in mind, and we strive to collect as little information as possible while providing valuable tools.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">2. Information We Collect</h2>
+                    <p class="policy-text">DailyTools is designed to minimize data collection. We only collect information that is necessary to provide and improve our services:</p>
+                    
+                    <h3>2.1 Information You Provide Voluntarily</h3>
+                    <ul class="policy-list">
+                        <li>Contact information when you reach out to our support team</li>
+                        <li>Feedback and survey responses</li>
+                        <li>Information you provide when participating in our community forums</li>
+                    </ul>
+                    
+                    <h3>2.2 Information Collected Automatically</h3>
+                    <ul class="policy-list">
+                        <li>Basic usage data through anonymous analytics</li>
+                        <li>Device information (browser type, operating system)</li>
+                        <li>IP address (anonymized and used for aggregate statistics only)</li>
+                        <li>Cookies and similar technologies (see Section 5)</li>
+                    </ul>
+                    
+                    <h3>2.3 Information We Do Not Collect</h3>
+                    <p class="policy-text">We specifically do not collect:</p>
+                    <ul class="policy-list">
+                        <li>Personal data from most of our tools (they run locally in your browser)</li>
+                        <li>Your documents, notes, or content created using our tools</li>
+                        <li>Passwords generated by our password generator</li>
+                        <li>Emails received through our temporary email service (they are temporarily stored but not accessed by us)</li>
+                    </ul>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">3. How We Use Your Information</h2>
+                    <p class="policy-text">We use the limited information we collect for the following purposes:</p>
+                    <ul class="policy-list">
+                        <li>To provide, maintain, and improve our services</li>
+                        <li>To respond to your comments, questions, and requests</li>
+                        <li>To monitor and analyze trends, usage, and activities</li>
+                        <li>To detect, prevent, and address technical issues</li>
+                        <li>To develop new products, services, features, and functionality</li>
+                    </ul>
+                    
+                    <div class="policy-highlight">
+                        <p><strong>Important:</strong> The core functionality of our tools is designed to work without collecting personal data. Most processing happens locally on your device, not on our servers.</p>
+                    </div>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">4. Data Storage and Security</h2>
+                    <p class="policy-text">We implement appropriate technical and organizational measures to protect the limited information we process:</p>
+                    <ul class="policy-list">
+                        <li>Encryption of data in transit using SSL/TLS protocols</li>
+                        <li>Regular security assessments and testing</li>
+                        <li>Access controls to restrict who can access user data</li>
+                        <li>Regular backups to prevent data loss</li>
+                    </ul>
+                    <p class="policy-text">While we strive to use commercially acceptable means to protect your information, no method of transmission over the Internet or electronic storage is 100% secure. We cannot guarantee absolute security.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">5. Cookies and Tracking Technologies</h2>
+                    <p class="policy-text">We use cookies and similar tracking technologies to track activity on our service and hold certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier.</p>
+                    
+                    <h3>5.1 Types of Cookies We Use</h3>
+                    <ul class="policy-list">
+                        <li><strong>Essential Cookies:</strong> Required for the operation of our service</li>
+                        <li><strong>Analytical/Performance Cookies:</strong> Allow us to recognize and count the number of visitors and see how visitors move around our website</li>
+                        <li><strong>Functionality Cookies:</strong> Used to recognize you when you return to our website</li>
+                    </ul>
+                    
+                    <h3>5.2 Your Choices Regarding Cookies</h3>
+                    <p class="policy-text">You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">6. Third-Party Services</h2>
+                    <p class="policy-text">We may employ third-party companies and individuals to facilitate our service, provide the service on our behalf, perform service-related services, or assist us in analyzing how our service is used.</p>
+                    <p class="policy-text">These third parties have access to your information only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+                    
+                    <h3>6.1 Third-Party Services We Use</h3>
+                    <ul class="policy-list">
+                        <li><strong>Analytics:</strong> Google Analytics (with anonymized IP)</li>
+                        <li><strong>Hosting:</strong> Amazon Web Services, Google Cloud Platform</li>
+                        <li><strong>Communication:</strong> Services for customer support and email</li>
+                    </ul>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">7. Your Data Rights</h2>
+                    <p class="policy-text">Depending on your location, you may have certain rights regarding your personal information:</p>
+                    <ul class="policy-list">
+                        <li>The right to access and receive a copy of your personal information</li>
+                        <li>The right to rectify (correct) your personal information</li>
+                        <li>The right to request deletion of your personal information</li>
+                        <li>The right to restrict or object to our processing of your personal information</li>
+                        <li>The right to data portability</li>
+                    </ul>
+                    <p class="policy-text">To exercise any of these rights, please contact us using the information provided in the "Contact Us" section.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">8. Children's Privacy</h2>
+                    <p class="policy-text">Our service is not intended for use by children under the age of 13 ("Children"). We do not knowingly collect personally identifiable information from children under 13. If you become aware that a child has provided us with personal information, please contact us. If we become aware that we have collected personal information from children without verification of parental consent, we take steps to remove that information from our servers.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">9. Changes to This Privacy Policy</h2>
+                    <p class="policy-text">We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy.</p>
+                    <p class="policy-text">You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 class="policy-section-title">10. Contact Us</h2>
+                    <p class="policy-text">If you have any questions about this Privacy Policy, please contact us:</p>
+                    <ul class="policy-list">
+                        <li>By email: privacy@dailytools.com</li>
+                        <li>Through our contact form: <a href="contact.html">Contact Us</a></li>
+                        <li>By mail: DailyTools, 123 Productivity Street, San Francisco, CA 94103, United States</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="policy-sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Policy Contents</h3>
+                    <div class="toc-links">
+                        <a href="#introduction" class="toc-link">1. Introduction</a>
+                        <a href="#information-collected" class="toc-link">2. Information We Collect</a>
+                        <a href="#information-use" class="toc-link">3. How We Use Your Information</a>
+                        <a href="#data-storage" class="toc-link">4. Data Storage and Security</a>
+                        <a href="#cookies" class="toc-link">5. Cookies and Tracking</a>
+                        <a href="#third-party" class="toc-link">6. Third-Party Services</a>
+                        <a href="#data-rights" class="toc-link">7. Your Data Rights</a>
+                        <a href="#children" class="toc-link">8. Children's Privacy</a>
+                        <a href="#policy-changes" class="toc-link">9. Policy Changes</a>
+                        <a href="#contact" class="toc-link">10. Contact Us</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="widget-title">Need Help?</h3>
+                    <p>If you have questions about our privacy practices or your data, we're here to help.</p>
+                    <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Related Documents</h3>
+                    <div class="toc-links">
+                        <a href="#" class="toc-link">Terms of Service</a>
+                        <a href="#" class="toc-link">Cookie Policy</a>
+                        <a href="faq.html" class="toc-link">FAQ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="contact-title">Questions About Your Privacy?</h2>
+            <p class="contact-desc">We're committed to transparency and happy to answer any questions you have about our privacy practices or your data.</p>
+            <a href="contact.html" class="btn btn-primary">Contact Our Privacy Team</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-tools"></i>
+                        DailyTools
+                    </a>
+                    <p class="footer-desc">A free, privacy-focused, all-in-one platform offering a suite of online productivity tools.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Product</h3>
+                    <div class="footer-links">
+                        <a href="index.html#features" class="footer-link">Features</a>
+                        <a href="index.html#tools" class="footer-link">Tools</a>
+                        <a href="index.html#download" class="footer-link">Download</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Company</h3>
+                    <div class="footer-links">
+                        <a href="blog.html" class="footer-link">Blog</a>
+                        <a href="careers.html" class="footer-link">Careers</a>
+                        <a href="contact.html" class="footer-link">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Legal</h3>
+                    <div class="footer-links">
+                        <a href="faq" class="footer-link">FAQ</a>
+                        <a href="support.html" class="footer-link">Support Us</a>
+                        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+                        <a href="term-of-service.html" class="footer-link">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> DailyTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu and smooth scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const header = document.querySelector('header');
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                    header.style.padding = '10px 0';
+                } else {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)';
+                    header.style.padding = '16px 0';
+                }
+            });
+            
+            // Smooth scrolling for table of contents
+            document.querySelectorAll('.toc-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // In a real implementation, this would scroll to the corresponding section
+                    alert('In a real implementation, this would scroll to the section: ' + this.textContent);
+                });
+            });
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

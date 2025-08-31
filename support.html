@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support DailyTools</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #c7d2fe;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --gray: #9ca3af;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            z-index: 101;
+        }
+
+        /* Support Hero */
+        .support-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(to bottom, rgba(79, 70, 229, 0.05), transparent);
+            text-align: center;
+        }
+
+        .support-hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .support-hero-desc {
+            font-size: 1.25rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Support Content */
+        .support-content {
+            padding: 80px 0;
+        }
+
+        .support-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .support-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .support-intro p {
+            font-size: 1.125rem;
+            color: var(--dark);
+            margin-bottom: 24px;
+        }
+
+        .support-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .support-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .support-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .support-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--darker);
+        }
+
+        .support-card p {
+            color: var(--dark);
+            margin-bottom: 24px;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            background: var(--white);
+            padding: 12px;
+        }
+
+        .upi-id {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--lighter);
+            border-radius: 20px;
+            font-weight: 500;
+            margin: 16px 0;
+            color: var(--primary);
+        }
+
+        .other-options {
+            background-color: var(--lighter);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .other-options h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--darker);
+        }
+
+        .options-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            text-align: left;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .option-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .option-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--darker);
+        }
+
+        .option-content p {
+            color: var(--dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            color: var(--gray-light);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+
+        .footer-desc {
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+
+        .footer-links-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+                gap: 24px;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .support-hero-title {
+                font-size: 2.25rem;
+            }
+            
+            .support-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tools"></i>
+                DailyTools
+            </a>
+            
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#tools" class="nav-link">Tools</a>
+                <a href="index.html#download" class="nav-link">Download</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="careers.html" class="nav-link">Careers</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="support.html" class="nav-link active">Support Us</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Support Hero -->
+    <section class="support-hero">
+        <div class="container">
+            <h1 class="support-hero-title">Support DailyTools Development</h1>
+            <p class="support-hero-desc">Your contribution helps maintain and improve our free productivity tools. Help us keep DailyTools accessible to everyone.</p>
+        </div>
+    </section>
+
+    <!-- Support Content -->
+    <section class="support-content">
+        <div class="container support-container">
+            <div class="support-intro">
+                <p>DailyTools is committed to providing free, privacy-focused productivity tools to everyone. If you find our apps useful, please consider supporting the development effort. Every contribution helps us maintain and improve the tools you love.</p>
+            </div>
+            
+            <div class="support-options">
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>UPI Payment</h3>
+                    <p>Make a quick payment using any UPI app. Scan the QR code or use the UPI ID below.</p>
+                    
+                    <div class="qr-code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=upi://pay?pa=8389873317@axl&pn=RohitPrasadYadav&mc=0000&mode=02&purpose=00" alt="UPI QR Code">
+                    </div>
+                    
+                    <div class="upi-id">*****317@axl</div>
+                    
+                    <a href="upi://pay?pa=8389873317@axl&pn=RohitPrasadYadav&mc=0000&mode=02&purpose=00" class="btn btn-primary">
+                        <i class="fas fa-mobile-alt"></i> Pay via UPI
+                    </a>
+                </div>
+                
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Other Payment Methods</h3>
+                    <p>Prefer to use other payment methods? We accept various options to make supporting us easy.</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <div class="option-item">
+                            <div class="option-icon">
+                                <i class="fab fa-paypal"></i>
+                            </div>
+                            <div class="option-content">
+                                <h4>PayPal</h4>
+                                <p>Send support via PayPal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="option-item">
+                            <div class="option-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="option-content">
+                                <h4>Bank Transfer</h4>
+                                <p>Direct bank transfer options</p>
+                            </div>
+                        </div>
+                        
+                        <div class="option-item">
+                            <div class="option-icon">
+                                <i class="fab fa-bitcoin"></i>
+                            </div>
+                            <div class="option-content">
+                                <h4>Crypto</h4>
+                                <p>Cryptocurrency donations</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Request Details
+                    </a>
+                </div>
+            </div>
+            
+            <div class="other-options">
+                <h2>Other Ways to Support</h2>
+                <p>Financial contributions aren't the only way to help DailyTools grow. Here are other valuable ways to support us:</p>
+                
+                <div class="options-list">
+                    <div class="option-item">
+                        <div class="option-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Leave a Review</h4>
+                            <p>Share your experience and rate our apps</p>
+                        </div>
+                    </div>
+                    
+                    <div class="option-item">
+                        <div class="option-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Spread the Word</h4>
+                            <p>Tell friends and colleagues about DailyTools</p>
+                        </div>
+                    </div>
+                    
+                    <div class="option-item">
+                        <div class="option-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Report Issues</h4>
+                            <p>Help us improve by reporting bugs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="option-item">
+                        <div class="option-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Suggest Features</h4>
+                            <p>Share ideas for new tools or improvements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-tools"></i>
+                        DailyTools
+                    </a>
+                    <p class="footer-desc">A free, privacy-focused, all-in-one platform offering a suite of online productivity tools.</p>
+                    <div class="social-links">
+                    
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Product</h3>
+                    <div class="footer-links">
+                        <a href="index.html#features" class="footer-link">Features</a>
+                        <a href="index.html#tools" class="footer-link">Tools</a>
+                        <a href="index.html#download" class="footer-link">Download</a>
+                    
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Company</h3>
+                    <div class="footer-links">
+                        <a href="blog.html" class="footer-link">Blog</a>
+                        <a href="careers.html" class="footer-link">Careers</a>
+                        <a href="contact.html" class="footer-link">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <h3 class="footer-links-title">Support</h3>
+                    <div class="footer-links">
+                        <a href="faq.html" class="footer-link">FAQ</a>
+                              <a href="support.html" class="footer-link">Support Us</a>
+                        <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+                        <a href="term-of-service.html" class="footer-link">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> DailyTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const header = document.querySelector('header');
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                    header.style.padding = '10px 0';
+                } else {
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)';
+                    header.style.padding = '16px 0';
+                }
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Update copyright year automatically
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

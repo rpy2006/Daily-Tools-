@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyTools - Time Master</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === Colors & Base Styles === */
+        :root {
+            --white: #ffffff;
+            --yellow: #ffd700;
+            --black: #000000;
+            --gray: #f5f5f5;
+            --light-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --primary: #4285f4;
+            --primary-dark: #3367d6;
+            --danger: #ea4335;
+            --success: #34a853;
+            --calendar-bg: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        /* === Header & Hamburger Menu === */
+        header {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+        
+        .hamburger {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--black);
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* === Sidebar Navigation === */
+         .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+        /* === Main Content === */
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .panel {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+        
+        /* Clock Styles */
+        .clock-display {
+            font-size: 3.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin: 1rem 0;
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+            color: var(--black);
+        }
+        
+        .date-display {
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+        }
+        
+        /* Timer Styles */
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin: 1rem 0;
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+            color: var(--black);
+        }
+        
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #d33426;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--light-gray);
+            color: var(--black);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--gray);
+        }
+        
+        .timer-settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .setting-group label {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        input[type="number"] {
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 120px;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+        
+        .presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .preset-btn {
+            padding: 0.4rem 0.8rem;
+            background-color: var(--gray);
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .preset-btn:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .lap-times {
+            margin-top: 2rem;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 1rem;
+        }
+        
+        .lap-times h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+        }
+        
+        .lap-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .lap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .lap-number {
+            font-weight: 500;
+        }
+        
+        .lap-time {
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .lap-difference {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .positive {
+            color: var(--danger);
+        }
+        
+        .negative {
+            color: var(--success);
+        }
+        
+        /* Calendar Styles */
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .calendar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .calendar-nav-btn:hover {
+            background-color: var(--gray);
+        }
+        
+        .calendar th {
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .calendar td {
+            padding: 0.8rem;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .calendar td:hover {
+            background-color: var(--gray);
+        }
+        
+        .calendar-day {
+            font-weight: 500;
+        }
+        
+        .current-day {
+            background-color: var(--primary);
+            color: white;
+            border-radius: 4px;
+        }
+        
+        .other-month {
+            color: var(--light-gray);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .clock-display,
+            .timer-display {
+                font-size: 2.5rem;
+            }
+            
+            .timer-controls {
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Hamburger -->
+    <header>
+        <div class="logo">DailyTools™</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/bank.html">Bank</a></li>
+            <li><a href="/calculator.html">Calculator</a></li>
+            <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+            <li><a href="/GitHub.html">GitHub</a></li>
+            <li><a href="/notes.html">Notes</a></li>
+            <li><a href="/password.html">Password Generator</a></li>
+            <li><a href="/photo.html">Gallery</a></li>
+            <li><a href="/qr.html">QR</a></li>
+            <li><a href="/quotes.html">Quote</a></li>
+            <li><a href="/salary.html">Salary</a></li>
+            <li><a href="/support.html">Support</a></a></li>
+            <li><a href="/temp-mail.html">Temp Mail</a></li>
+            <li><a href="/termux.html">Termux</a></li>
+            <li><a href="/timer.html">Timer</a></li>
+            <li><a href="/to do list.html">To Do List</a></li>
+            <li><a href="youtube.html">YouTube</a></li>
+        
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="dashboard">
+            <!-- Clock Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title"><i class="fas fa-clock"></i> Digital Clock</h2>
+                </div>
+                <div class="clock-display" id="clockDisplay">00:00:00</div>
+                <div class="date-display" id="dateDisplay">Monday, January 1, 2023</div>
+            </div>
+            
+            <!-- Calendar Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title"><i class="fas fa-calendar-alt"></i> Calendar</h2>
+                </div>
+                <div class="calendar-header">
+                    <div class="calendar-title" id="calendarTitle">January 2023</div>
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-btn" id="prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="calendar-nav-btn" id="todayBtn">Today</button>
+                        <button class="calendar-nav-btn" id="nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <table class="calendar" id="calendar">
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarBody">
+                        <!-- Calendar will be generated here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Timer Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title"><i class="fas fa-stopwatch"></i> Timer</h2>
+                </div>
+                <div class="timer-display" id="timerDisplay">00:00:00</div>
+                
+                <div class="timer-controls">
+                    <button class="btn btn-primary" id="startBtn">
+                        <i class="fas fa-play"></i> Start
+                    </button>
+                    <button class="btn btn-danger" id="stopBtn" disabled>
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                    <button class="btn btn-outline" id="lapBtn" disabled>
+                        <i class="fas fa-flag"></i> Lap
+                    </button>
+                    <button class="btn btn-outline" id="resetBtn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="timer-settings">
+                    <div class="setting-group">
+                        <label for="hoursInput">Hours</label>
+                        <div class="setting-control">
+                            <input type="number" id="hoursInput" min="0" max="99" value="0">
+                            <button class="preset-btn" data-target="hoursInput" data-value="1">+1</button>
+                        </div>
+                        <div class="presets">
+                            <button class="preset-btn" data-target="hoursInput" data-value="0.5">+30m</button>
+                            <button class="preset-btn" data-target="hoursInput" data-value="1">+1h</button>
+                            <button class="preset-btn" data-target="hoursInput" data-value="2">+2h</button>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="minutesInput">Minutes</label>
+                        <div class="setting-control">
+                            <input type="number" id="minutesInput" min="0" max="59" value="0">
+                            <button class="preset-btn" data-target="minutesInput" data-value="1">+1</button>
+                        </div>
+                        <div class="presets">
+                            <button class="preset-btn" data-target="minutesInput" data-value="5">+5m</button>
+                            <button class="preset-btn" data-target="minutesInput" data-value="15">+15m</button>
+                            <button class="preset-btn" data-target="minutesInput" data-value="30">+30m</button>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="secondsInput">Seconds</label>
+                        <div class="setting-control">
+                            <input type="number" id="secondsInput" min="0" max="59" value="0">
+                            <button class="preset-btn" data-target="secondsInput" data-value="1">+1</button>
+                        </div>
+                        <div class="presets">
+                            <button class="preset-btn" data-target="secondsInput" data-value="5">+5s</button>
+                            <button class="preset-btn" data-target="secondsInput" data-value="10">+10s</button>
+                            <button class="preset-btn" data-target="secondsInput" data-value="30">+30s</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lap-times">
+                    <h3>Lap Times</h3>
+                    <div class="lap-list" id="lapList">
+                        <!-- Lap times will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // DOM Elements
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const clockDisplay = document.getElementById('clockDisplay');
+        const dateDisplay = document.getElementById('dateDisplay');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const lapBtn = document.getElementById('lapBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const hoursInput = document.getElementById('hoursInput');
+        const minutesInput = document.getElementById('minutesInput');
+        const secondsInput = document.getElementById('secondsInput');
+        const lapList = document.getElementById('lapList');
+        const presetBtns = document.querySelectorAll('.preset-btn');
+        const calendarTitle = document.getElementById('calendarTitle');
+        const calendarBody = document.getElementById('calendarBody');
+        const prevMonthBtn = document.getElementById('prevMonthBtn');
+        const nextMonthBtn = document.getElementById('nextMonthBtn');
+        const todayBtn = document.getElementById('todayBtn');
+        
+        // Toggle Sidebar
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+        
+        /* ===== CLOCK FUNCTIONALITY ===== */
+        function updateClock() {
+            const now = new Date();
+            
+            // Format time (HH:MM:SS)
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            clockDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // Format date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateDisplay.textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        // Update clock immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+        
+        /* ===== CALENDAR FUNCTIONALITY ===== */
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getF

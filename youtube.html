@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DailyTools - Music Player</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --white: #ffffff;
+        --yellow: #ffd700;
+        --black: #000000;
+        --gray: #f5f5f5;
+      }
+       html, body
+       {
+ .       height: 100%;
+.        margin: 0;
+        overflow: hidden;
+  /* 🚫 removes scroll */
+.       }
+      body {
+        font-family: "Inter", system-ui, -apple-system;
+        margin: 0;
+        padding: 0;
+        background: var(--white);
+        color: var(--black);
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: var(--white);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
+      }
+
+      .logo {
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: var(--black);
+      }
+
+      .hamburger {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .hamburger span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background: var(--black);
+        transition: 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+
+      main {
+        padding: 2rem 1rem;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      /* Sticky player section */
+      .player-section {
+        position: sticky;
+        top: 50px;
+        max-width: 900px;
+        margin: auto;
+        z-index: 999;
+        background: var(--white);
+        padding: -1rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .player-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 ratio */
+        background: #000;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      #player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .controls button {
+        width: 45px;
+        height: 45px;
+        border: none;
+        border-radius: 50%;
+        background: #000;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .controls button:hover {
+        background: var(--yellow);
+        color: #000;
+      }
+
+      #now-playing {
+        text-align: center;
+        margin-top: 10px;
+        font-weight: 600;
+      }
+
+      /* Playlist List */
+      .playlist-container {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .playlist-card {
+        padding: 12px 16px;
+        background: var(--gray);
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.2s;
+      }
+
+      .playlist-card:hover {
+        background: var(--yellow);
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">DailyTools™</div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <ul>
+          <li><a href="/index.html">Home</a></li>
+            <li><a href="/bank.html">Bank</a></li>
+            <li><a href="/calculator.html">Calculator</a></li>
+            <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+            <li><a href="/GitHub.html">GitHub</a></li>
+            <li><a href="/notes.html">Notes</a></li>
+            <li><a href="/password.html">Password Generator</a></li>
+            <li><a href="/photo.html">Gallery</a></li>
+            <li><a href="/qr.html">QR</a></li>
+            <li><a href="/quotes.html">Quote</a></li>
+            <li><a href="/salary.html">Salary</a></li>
+            <li><a href="/support.html">Support</a></a></li>
+            <li><a href="/temp-mail.html">Temp Mail</a></li>
+            <li><a href="/termux.html">Termux</a></li>
+            <li><a href="/timer.html">Timer</a></li>
+            <li><a href="/to do list.html">To Do List</a></li>
+            <li><a href="youtube.html">YouTube</a></li>
+        
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <main>
+      <!-- Music Player -->
+      <div class="player-section">
+        <div class="player-container">
+          <div id="player"></div>
+        </div>
+        <div class="controls">
+          <button id="prev-btn" title="Previous">
+            <i class="fas fa-backward"></i>
+          </button>
+          <button id="play-pause-btn" title="Play / Pause">
+            <i class="fas fa-play"></i>
+          </button>
+          <button id="next-btn" title="Next">
+            <i class="fas fa-forward"></i>
+          </button>
+          <button id="mute-btn" title="Mute / Unmute">
+            <i class="fas fa-volume-mute"></i>
+          </button>
+          <button id="vol-down" title="Volume Down">
+            <i class="fas fa-volume-down"></i>
+          </button>
+          <button id="vol-up" title="Volume Up">
+            <i class="fas fa-volume-up"></i>
+          </button>
+        </div>
+        <p id="now-playing">Select a playlist to begin 🎵</p>
+      </div>
+
+      <!-- Playlist -->
+      <div class="playlist-container">
+        <div class="playlist-card" data-playlist="PLsgq11sUh7TAPeHVghI-VkObq0ME1FGNr" data-title="Hindi Songs">
+          🎶 Hindi Songs
+        </div>
+        <div class="playlist-card" data-playlist="PLsgq11sUh7TA5oiR3HHR96CdfSE0F0HGu" data-title="English Songs">
+          🎵 English Songs
+        </div>
+        <div class="playlist-card" data-playlist="PLsgq11sUh7TAf-cXcCFjyaey0bjEavnm3" data-title="90s Songs">
+          📻 90s Songs
+        </div>
+        <div class="playlist-card" data-playlist="PLsgq11sUh7TAd-YHX5ARyp9UzKOokRjzM" data-title="Nepali Songs">
+          🎼 Nepali Songs
+        </div>
+        <div class="playlist-card" data-playlist="PLSoq0o7PsCrimCrXnCYI9CrPRE0mmy8tg" data-title="Hindi Party Songs">
+          🥳 Hindi Party Songs
+        </div>
+        <div class="playlist-card" data-playlist="PLsgq11sUh7TCC05umUhFEr6eGGbr-pLCY" data-title="Special Collection">
+          ⭐ Special Collection
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Sidebar toggle
+      const hamburger = document.getElementById("hamburger");
+      const sidebar = document.getElementById("sidebar");
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        sidebar.classList.toggle("active");
+      });
+
+      // YouTube API
+      let player, isPlaying = false, isMuted = false, currentPlaylist = null;
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+
+      window.onYouTubeIframeAPIReady = function () {
+        player = new YT.Player("player", {
+          height: "100%",
+          width: "100%",
+          playerVars: { playsinline: 1, rel: 0 },
+          events: { onStateChange: onStateChange },
+        });
+      };
+
+      function onStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+          isPlaying = true;
+          document.querySelector("#play-pause-btn i").className = "fas fa-pause";
+        } else {
+          isPlaying = false;
+          document.querySelector("#play-pause-btn i").className = "fas fa-play";
+        }
+      }
+
+      // Playlist click
+      document.querySelectorAll(".playlist-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          currentPlaylist = card.dataset.playlist;
+          document.getElementById("now-playing").textContent =
+            "Now Playing: " + card.dataset.title;
+          player.loadPlaylist({ listType: "playlist", list: currentPlaylist });
+        });
+      });
+
+      // Controls
+      document.getElementById("play-pause-btn").onclick = () => {
+        if (isPlaying) player.pauseVideo();
+        else player.playVideo();
+      };
+      document.getElementById("prev-btn").onclick = () => player.previousVideo();
+      document.getElementById("next-btn").onclick = () => player.nextVideo();
+      document.getElementById("mute-btn").onclick = () => {
+        if (isMuted) {
+          player.unMute();
+          isMuted = false;
+          document.querySelector("#mute-btn i").className = "fas fa-volume-mute";
+        } else {
+          player.mute();
+          isMuted = true;
+          document.querySelector("#mute-btn i").className = "fas fa-volume-up";
+        }
+      };
+      document.getElementById("vol-up").onclick = () =>
+        player.setVolume(Math.min(player.getVolume() + 10, 100));
+      document.getElementById("vol-down").onclick = () =>
+        player.setVolume(Math.max(player.getVolume() - 10, 0));
+    </script>
+  </body>
+</html>

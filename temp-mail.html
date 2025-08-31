@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyTools - Temp Mail</title>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === Original Navigation Styles === */
+        :root {
+            --white: #ffffff;
+            --yellow: #ffd700;
+            --black: #000000;
+            --gray: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* Header & Hamburger - Original Style */
+        header {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+        
+        .hamburger {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--black);
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Sidebar - Original Style */
+        .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      transition: 0.3s;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 2rem;
+      margin-top: 60px;
+    }
+    .sidebar li {
+      margin: 1.2rem 0;
+    }
+    .sidebar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+     /* color: var(--yellow);
+      font-weight: bold;*/
+    }
+
+
+        /* === Temp Mail Styles (Clean and Simple) === */
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .email-container {
+            margin-top: 1rem;
+        }
+        
+        .email-display {
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--gray);
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--yellow);
+            color: var(--black);
+        }
+        
+        .btn-secondary {
+            background: var(--black);
+            color: var(--white);
+        }
+        
+        .inbox {
+            margin-top: 2rem;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .email-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray);
+            cursor: pointer;
+        }
+        
+        .email-item:hover {
+            background: rgba(0,0,0,0.05);
+        }
+        
+        .email-content {
+            display: none;
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Original Header with Hamburger -->
+    <header>
+        <div class="logo">DailyTools™</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Original Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+              <li><a href="/index.html">Home</a></li>
+            <li><a href="/bank.html">Bank</a></li>
+            <li><a href="/calculator.html">Calculator</a></li>
+            <li><a href="/emi-calculator.html">EMI Calculator</a></li>
+            <li><a href="/GitHub.html">GitHub</a></li>
+            <li><a href="/notes.html">Notes</a></li>
+            <li><a href="/password.html">Password Generator</a></li>
+            <li><a href="/photo.html">Gallery</a></li>
+            <li><a href="/qr.html">QR</a></li>
+            <li><a href="/quotes.html">Quote</a></li>
+            <li><a href="/salary.html">Salary</a></li>
+            <li><a href="/support.html">Support</a></a></li>
+            <li><a href="/temp-mail.html">Temp Mail</a></li>
+            <li><a href="/termux.html">Termux</a></li>
+            <li><a href="/timer.html">Timer</a></li>
+            <li><a href="/to do list.html">To Do List</a></li>
+            <li><a href="youtube.html">YouTube</a></li>
+        
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Temp Mail Service</h1>
+        
+        <div class="email-container">
+            <div class="email-display" id="emailAddress">No email generated yet</div>
+            
+            <div>
+                <button class="btn btn-primary" id="generateBtn">Generate Email</button>
+                <button class="btn btn-secondary" id="copyBtn">Copy Address</button>
+                <button class="btn btn-secondary" id="refreshBtn">Refresh Inbox</button>
+            </div>
+            
+            <div class="inbox" id="inbox">
+                <p>Inbox will appear here after generating an email</p>
+            </div>
+            
+            <div class="email-content" id="emailContent">
+                <h3 id="emailSubject"></h3>
+                <p><strong>From:</strong> <span id="emailFrom"></span></p>
+                <div id="emailBody"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation Toggle (Original)
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+        
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Temp Mail Functionality
+        const API_URL = "https://api.mail.tm";
+        let currentEmail = localStorage.getItem('tempEmail') || "";
+        let currentToken = localStorage.getItem('tempToken') || "";
+        
+        document.getElementById('emailAddress').textContent = currentEmail || "No email generated yet";
+        
+        // Generate new email
+        document.getElementById('generateBtn').addEventListener('click', async () => {
+            try {
+                // Get available domain
+                const domainsRes = await fetch(`${API_URL}/domains`);
+                const domains = await domainsRes.json();
+                const domain = domains['hydra:member'][0].domain;
+                
+                // Create random email
+                currentEmail = `user${Math.floor(Math.random() * 100000)}@${domain}`;
+                const password = "temppass123"; // Simple password for demo
+                
+                // Create account
+                await fetch(`${API_URL}/accounts`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ address: currentEmail, password })
+                });
+                
+                // Get token
+                const tokenRes = await fetch(`${API_URL}/token`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ address: currentEmail, password })
+                });
+                
+                const tokenData = await tokenRes.json();
+                currentToken = tokenData.token;
+                
+                // Save to storage
+                localStorage.setItem('tempEmail', currentEmail);
+                localStorage.setItem('tempToken', currentToken);
+                
+                // Update UI
+                document.getElementById('emailAddress').textContent = currentEmail;
+                fetchInbox();
+                
+                alert('New email created: ' + currentEmail);
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Failed to create email");
+            }
+        });
+        
+        // Copy email
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            if (!currentEmail) {
+                alert("No email to copy");
+                return;
+            }
+            
+            navigator.clipboard.writeText(currentEmail)
+                .then(() => alert("Copied to clipboard!"))
+                .catch(() => alert("Failed to copy"));
+        });
+        
+        // Fetch inbox
+        async function fetchInbox() {
+            if (!currentToken) return;
+            
+            try {
+                const res = await fetch(`${API_URL}/messages`, {
+                    headers: { "Authorization": `Bearer ${currentToken}` }
+                });
+                
+                const messages = await res.json();
+                displayInbox(messages['hydra:member']);
+            } catch (error) {
+                console.error("Error fetching inbox:", error);
+            }
+        }
+        
+        // Display inbox
+        function displayInbox(messages) {
+            const inbox = document.getElementById('inbox');
+            
+            if (!messages || messages.length === 0) {
+                inbox.innerHTML = "<p>No messages found</p>";
+                return;
+            }
+            
+            inbox.innerHTML = messages.map(msg => `
+                <div class="email-item" onclick="viewEmail('${msg.id}')">
+                    <strong>${msg.subject || 'No subject'}</strong>
+                    <p>From: ${msg.from?.address || 'Unknown'}</p>
+                </div>
+            `).join('');
+        }
+        
+        // View email
+        async function viewEmail(id) {
+            try {
+                const res = await fetch(`${API_URL}/messages/${id}`, {
+                    headers: { "Authorization": `Bearer ${currentToken}` }
+                });
+                
+                const email = await res.json();
+                
+                document.getElementById('emailSubject').textContent = email.subject || 'No subject';
+                document.getElementById('emailFrom').textContent = email.from?.address || 'Unknown';
+                document.getElementById('emailBody').textContent = email.text || 'No content';
+                document.getElementById('emailContent').style.display = 'block';
+            } catch (error) {
+                console.error("Error viewing email:", error);
+            }
+        }
+        
+        // Refresh inbox
+        document.getElementById('refreshBtn').addEventListener('click', fetchInbox);
+        
+        // Initialize if email exists
+        if (currentEmail) {
+            fetchInbox();
+        }
+    </script>
+</body>
+</html>
